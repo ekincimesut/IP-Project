@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Interactief studentenmodel: bekijk, vertraag en vergelijk de berekende beweging van een equivalent massa–veer–dempersysteem. Geen breukvoorspelling.">
+<title>GVB-project · Experimentenlab v3</title>
+<style>:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;color:#17232b;background:#f3f5f5;font-synthesis:none;--ink:#17232b;--muted:#58676f;--line:#dce3e5;--accent:#135f60;--soft:#eaf4f1;--focus:#065f6e}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,select,input[type=range]{cursor:pointer}button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 14px;color:inherit;font-size:13px;font-weight:650}button:hover{border-color:#738b8d;background:#f5f9f8}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button.primary:hover{background:#104b4c}a{color:inherit}h1,h2,h3,p{margin:0}h1{font-size:clamp(28px,3vw,38px);letter-spacing:-1.3px;line-height:1.15}h2{font-size:18px;letter-spacing:-.3px}h3{font-size:14px}.muted{color:var(--muted)}.small{font-size:12px}.kicker{font-size:10px;text-transform:uppercase;letter-spacing:1.9px;font-weight:750}.topbar{height:59px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1440px)/2));background:#fff;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:750;font-size:14px}.brandmark{background:var(--ink);color:white;width:29px;height:29px;border-radius:8px;display:grid;place-content:center;font-size:17px}.version{font-weight:550;font-size:12px;color:var(--muted);padding-left:10px;border-left:1px solid var(--line)}.local{font-size:11px;color:var(--muted)}.local:before{content:"";display:inline-block;height:6px;width:6px;border-radius:50%;background:var(--accent);margin-right:7px}main{max-width:1440px;margin:auto;padding:24px}.intro{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:17px}.intro p{font-size:14px;margin-top:8px;color:var(--muted)}.pill{font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:6px 9px;border-radius:5px;background:#e6edee;font-weight:750;white-space:nowrap}.scope-note{padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:12px;margin-bottom:20px;color:#43545d}.scope-note strong{color:var(--ink)}.layout{display:grid;grid-template-columns:285px minmax(0,1fr);gap:20px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}.sidebar{padding:20px;position:sticky;top:14px}.sidebar .small{margin:6px 0 21px}.field{margin:0 0 19px}.field-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:9px}label{font-size:12px;font-weight:650}.number{width:72px;padding:5px 7px;border:1px solid var(--line);border-radius:5px;font-size:13px;font-variant-numeric:tabular-nums;background:#fff;color:var(--ink)}.number.wide{width:100px}.unit{font-size:11px;color:var(--muted);font-weight:500;margin-left:5px}.range{appearance:none;height:4px;border-radius:5px;width:100%;margin:7px 0 6px;background:#dce4e4;accent-color:var(--accent)}.range::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:2px solid white;box-shadow:0 0 0 1px var(--accent)}.range::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid white}.ends{display:flex;justify-content:space-between;font-size:10px;color:#73828a}.field-help{font-size:11px;color:var(--muted);margin-top:5px}details{border-top:1px solid var(--line);margin:14px 0 0;padding-top:12px}summary{cursor:pointer;font-size:12px;font-weight:650}.advanced{padding-top:15px}.advanced .field{margin-bottom:12px}.full{width:100%;margin-top:14px}.status{font-size:11px;color:var(--muted);min-height:32px;margin:10px 0}.status.error{color:#9a3027}.sidebar .experiments{margin-top:15px;padding-top:17px;border-top:1px solid var(--line)}.experiment-buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.experiment-buttons button{font-size:11px;padding:8px 5px}.experiment-buttons button:first-child{grid-column:1/-1}.sidebar .reset{margin-top:9px;width:100%;padding:8px;background:none}.main-col{min-width:0}.stage-top{display:flex;align-items:center;justify-content:space-between;padding:17px 20px 14px;gap:15px;border-bottom:1px solid var(--line)}.stage-top h2{margin-top:3px}.stage-top button{font-size:12px}.stage-top .actions{display:flex;gap:7px;align-items:center}.stage-area{background:#12212a;color:#e5eef2;padding:16px 18px 12px}.stage-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(240px,.8fr);gap:16px;align-items:stretch}.scene-panel{min-width:0}.scene-header{display:flex;align-items:center;justify-content:space-between;min-height:22px;gap:8px;padding:0 9px}.scene-label{font-size:11px;font-weight:700;letter-spacing:.3px}.scene-info{font-size:10px;color:#a5bbc6;white-space:nowrap}.scene svg{width:100%;height:auto;display:block;overflow:visible}.scene svg text{font-family:inherit}.scene-note{font-size:10px;color:#a9bfc8;margin:0 10px}.guide{display:flex;flex-direction:column;justify-content:center;padding:12px 10px 15px 6px}.guide .step{display:flex;gap:12px;margin-bottom:23px}.step-num{width:22px;height:22px;border-radius:6px;border:1px solid #4a626d;display:grid;place-content:center;font-size:10px;flex-shrink:0}.step h3{font-size:13px;margin-bottom:4px}.step p{font-size:11px;line-height:1.6;color:#acc0ca}.guide-legend{font-size:10px;color:#acc0ca;display:flex;gap:12px;border-top:1px solid #30444e;padding-top:13px}.guide-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.view-options{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #30444e;margin-top:13px;padding:11px 8px 0;font-size:10px;color:#acc0ca}.view-options label{font-size:10px;font-weight:500}.view-options select{font-size:10px;border:1px solid #49616c;border-radius:4px;padding:4px;background:transparent;color:#e5eef2}.view-options option{color:#17232b;background:white}.stage-grid.compare{grid-template-columns:1fr 1fr}.stage-grid.compare .scene-header{padding-left:2px}.stage-grid.compare .scene-info{display:none}.stage-grid.compare #refPanel{border-left:1px solid #30444e;padding-left:14px}.scene-state{font-size:10px;text-align:center;color:#acc0ca;padding-top:5px;min-height:20px}.insight{padding:12px 20px;background:#f2f7f6;border-bottom:1px solid var(--line);display:flex;gap:13px;align-items:center;min-height:64px}.phase{font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.6px;background:#dcebe6;color:#1c5453;border-radius:5px;padding:5px 8px;flex-shrink:0}.insight p{font-size:12px;line-height:1.5}.transport{padding:14px 20px 17px}.transport-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}.transport-buttons{display:flex;gap:7px;align-items:center}.transport-buttons button{padding:8px 12px;font-size:12px;min-width:44px}.transport-buttons .play{min-width:107px}.play-icon{display:inline-block;width:16px}.speed-controls{display:flex;align-items:center;gap:10px}.speed-controls label{font-size:11px;font-weight:500}.speed-controls select{padding:7px 8px;border:1px solid var(--line);border-radius:5px;background:white;font-size:11px}.check{display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer}.check input{accent-color:var(--accent)}.timeline-row{display:flex;gap:14px;align-items:center}.timeline-row input{margin:0;flex:1;min-width:50px}.timecode{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;min-width:91px}.timeline-ticks{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin:8px 0 0 105px}.results-strip{display:grid;grid-template-columns:repeat(3,1fr);margin:16px 0;gap:10px}.result{padding:13px 16px}.result .small{font-size:11px;display:block;color:var(--muted)}.result strong{display:inline-block;font-size:23px;font-weight:680;letter-spacing:-.5px;font-variant-numeric:tabular-nums;margin:4px 0}.delta{font-size:10px;display:block;color:var(--accent);min-height:15px}.chart-card{padding:16px 20px 10px}.chart-head{display:flex;gap:10px;align-items:center;justify-content:space-between}.tabs{display:inline-flex;gap:3px;padding:3px;border:1px solid var(--line);background:#f5f7f7;border-radius:7px}.tabs button{background:transparent;border:0;padding:6px 10px;font-size:11px}.tabs button[aria-selected=true]{background:white;box-shadow:0 1px 4px #0001}.chart-head label{font-size:10px;font-weight:500}.chart-head select{border:1px solid var(--line);border-radius:4px;padding:6px;font-size:11px;background:#fff}.legend{display:flex;gap:18px;margin-top:13px;min-height:20px;font-size:10px;color:var(--muted);flex-wrap:wrap}.legend i{display:inline-block;vertical-align:middle;width:20px;border-top:2px solid currentColor;margin-right:5px}.legend i.dash{border-top-style:dashed}.legend i.dots{border-top-style:dotted}.chart-area{width:100%;touch-action:pan-y;cursor:crosshair}.chart-area svg{display:block;width:100%;height:auto;overflow:visible;color:inherit}.chart-area text{font-family:inherit;fill:currentColor}.chart-foot{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;padding:4px 0 6px;gap:10px}.details-card{padding:17px 20px;margin-top:16px}.details-card details{margin:0;padding:0;border:0}.details-card summary{font-size:13px}.details-content{margin-top:17px;font-size:12px;color:var(--muted);line-height:1.75}.details-content h3{color:var(--ink);margin:15px 0 5px}.equation{font:12px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f4f6f6;border-radius:6px;padding:12px;color:var(--ink)}.exports{margin-top:15px;display:flex;gap:7px;flex-wrap:wrap;align-items:center}.exports button,.exports a{font-size:11px}.exports p{font-size:11px;color:var(--muted);width:100%;margin-top:4px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 20px;background:#17232b;color:white;border-radius:9px;box-shadow:0 7px 25px #0002;font-size:12px;z-index:50;max-width:90vw;pointer-events:none}.hidden,[hidden]{display:none!important}footer{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;padding:21px 0 5px}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.compare-note{font-size:11px;margin-top:12px;color:var(--muted);padding:9px 12px;border-radius:5px;background:#f1f6f4}.diagram-detail{font-variant-numeric:tabular-nums}button svg{width:14px;height:14px;vertical-align:middle;margin-right:5px}
+@media(min-width:1600px){main{padding-top:30px}.stage-grid{grid-template-columns:1.1fr .75fr}}@media(max-width:1120px){.layout{grid-template-columns:253px minmax(0,1fr);gap:14px}.sidebar{padding:17px}.stage-grid{grid-template-columns:1fr}.guide{display:none}.stage-area{padding-left:14px;padding-right:14px}.stage-grid:not(.compare) .scene{max-width:480px;margin:auto}.intro{gap:10px}.stage-top{padding:14px}.transport{padding:14px}.speed-controls{gap:6px}.stage-top button{padding:8px 10px;font-size:11px}.transport-row{flex-wrap:wrap}.result{padding:11px}.result strong{font-size:20px}.view-options{flex-wrap:wrap}}@media(max-width:800px){main{padding:19px 15px}.layout{grid-template-columns:1fr}.sidebar{position:static}.parameters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.sidebar .small{margin:5px 0 17px}.sidebar .field{margin-bottom:10px}.advanced{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sidebar .experiments{margin-top:10px}.experiment-buttons{grid-template-columns:repeat(4,1fr)}.experiment-buttons button:first-child{grid-column:auto}.sidebar .reset{width:auto}.full{margin-top:10px}.status{min-height:0}.main-col{grid-row:1}.sidebar{grid-row:2}.local{display:none}.stage-grid{grid-template-columns:1.1fr .8fr}.guide{display:flex}.stage-grid:not(.compare) .scene{max-width:none}.intro .pill{display:none}.scope-note{font-size:11px}.stage-top .kicker{font-size:9px}.stage-top h2{font-size:16px}.intro p{font-size:12px}.stage-top .actions{gap:4px}.number{width:66px}.exports{justify-content:flex-start}}@media(max-width:570px){.topbar{padding:0 16px}.version{font-size:10px}.brand{font-size:12px;gap:9px}.stage-grid{grid-template-columns:1fr}.guide{display:none}.stage-grid.compare{grid-template-columns:1fr}.stage-grid.compare #refPanel{border-left:0;border-top:1px solid #30444e;padding:15px 0 0;margin-top:4px}.stage-grid.compare .scene svg{max-width:330px;margin:auto}.scene svg{max-width:420px;margin:auto}.transport-row{gap:10px}.speed-controls{justify-content:space-between;width:100%}.insight{padding:11px 14px;align-items:start;flex-direction:column;gap:6px;min-height:92px}.transport-buttons{width:100%}.transport-buttons #peak{margin-left:auto}.chart-card{padding:13px 12px 6px}.chart-head{flex-wrap:wrap}.results-strip{gap:6px}.result{padding:10px}.result strong{font-size:17px}.result .small{font-size:9px}.delta{font-size:9px;min-height:26px}.stage-top{align-items:start}.stage-top .actions{flex-direction:column;align-items:end}.stage-top button{font-size:10px;padding:6px 8px}.parameters{grid-template-columns:1fr}.advanced{grid-template-columns:1fr}.experiment-buttons{grid-template-columns:1fr 1fr}.view-options{font-size:9px;gap:8px}.scene-header{font-size:10px}.timeline-ticks{margin-left:0}.timecode{font-size:10px;min-width:72px}.timeline-row{gap:9px}footer{flex-direction:column;gap:4px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}@media print{.sidebar,.transport,.exports,.topbar,.guide,.stage-top .actions,.view-options,.scope-note{display:none}.layout{display:block}.stage-area{-webkit-print-color-adjust:exact;print-color-adjust:exact}.results-strip,.card{break-inside:avoid}body{background:white}main{padding:0}.stage-grid{grid-template-columns:1fr}.stage-grid.compare{grid-template-columns:1fr 1fr}}
+
+/* Compacte weergave houdt de afspeelknoppen op een laptopscherm in beeld. */
+.scene svg{height:325px;width:100%}.view-options{flex-wrap:wrap}.mobile-jump{display:none}
+@media(max-width:800px){.mobile-jump{display:inline-block}.sidebar .mobile-jump{margin-bottom:14px}.scene svg{height:310px}}
+@media(max-width:570px){.scene svg{height:285px}.stage-grid.compare .scene svg{height:275px}.view-options span:first-child{width:100%;line-height:1.6}}
+
+/* Beide tekenvlakken hebben exact dezelfde breedte in de vergelijking. */
+.stage-grid.compare #refPanel{border-left:0;padding-left:0}
+/* Experimentenlab v3 */
+.lab-jump{text-decoration:none;white-space:normal;text-align:center}.select-full{width:100%;font:inherit;font-size:12px;padding:9px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);margin-top:7px}.profile-field{margin-bottom:13px}.input-group{padding:13px 12px;background:#f1f6f5;border:1px solid #e1eae6;border-radius:8px;margin:0 0 19px}.input-group .field{margin-bottom:12px}.input-group .field:last-of-type{margin-bottom:0}.input-group .field-head{margin:0}.sidebar{position:static}.sidebar .status{overflow-wrap:anywhere}.profile-field label{font-size:12px}.input-preview{padding:13px 18px;margin-top:15px}.input-preview svg{display:block;width:100%;height:84px}.input-preview text{font:10px system-ui;fill:var(--muted)}.input-preview .field-help{font-size:10px;margin-top:1px}.research-card{margin-top:20px;padding:21px;scroll-margin-top:14px}.research-header{display:flex;align-items:start;justify-content:space-between;gap:15px}.research-header h2{font-size:21px;margin:6px 0 8px}.research-header p{font-size:12px;color:var(--muted);max-width:650px}.sweep-controls{display:grid;grid-template-columns:minmax(180px,1.6fr) repeat(3,minmax(68px,.6fr));gap:12px;margin:20px 0 10px;align-items:end}.sweep-controls label{font-size:11px;display:block;margin-bottom:6px}.sweep-controls input,.sweep-controls select{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:6px;padding:9px;background:white;font-size:12px;min-width:0;margin:0;color:var(--ink)}.sweep-run{grid-column:1/-1;display:flex;gap:8px}.sweep-status{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:13px}.sweep-status p{width:100%;line-height:1.65}.sweep-status .error{color:#9a3027}.sweep-status progress{width:100%;height:5px;accent-color:var(--accent);margin:7px 0}.research-empty{text-align:center;border:1px dashed #c8d6d3;border-radius:9px;padding:27px 18px;margin-top:19px;background:#f8faf9}.empty-symbol{font-size:33px;color:var(--accent);display:block;margin-bottom:7px}.research-empty h3{font-size:15px}.research-empty p{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.7}.snapshot{margin-top:18px;padding:10px 13px;background:#f1f5f4;border-radius:6px;font-size:11px;color:var(--muted)}.snapshot strong{color:var(--ink)}.snapshot p{margin-top:5px;line-height:1.75}.sweep-result-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:19px 0 6px}.sweep-result-head select{max-width:180px;border:1px solid var(--line);font-size:11px;border-radius:5px;padding:6px;background:white}.research-card svg{display:block;width:100%;height:auto;color:var(--ink);overflow:visible}.research-card svg text{font-family:inherit;fill:currentColor}.trial-point{cursor:pointer}.trial-point:focus-visible{outline:none}.trial-point:focus-visible .point-outline{stroke:var(--ink);stroke-width:3}.trial-point:hover .point-outline{stroke:var(--accent);stroke-width:3}.sweep-insight{font-size:12px;line-height:1.7;background:#edf5f2;padding:11px 13px;border-radius:6px}.sweep-selected{font-size:12px;border-left:3px solid var(--accent);padding:10px 12px;margin-top:12px;background:#f8faf9}.research-card .field-help{margin-top:11px}.table-scroll{overflow-x:auto;margin-top:10px}.table-scroll table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap;text-align:left}.table-scroll th{background:#f5f7f6;font-weight:650}.table-scroll td,.table-scroll th{padding:9px;border-bottom:1px solid var(--line)}.table-scroll tr.selected{background:#eaf4ef}.table-scroll button{font-size:10px;padding:5px 9px}.check-card{padding:18px 20px;margin-top:16px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.check-card .small{line-height:1.7;margin-top:4px}#checkStatus{grid-column:1/-1;background:#f5f7f6;padding:8px 11px;border-radius:5px;overflow-wrap:anywhere}.scope-note{line-height:1.65}#inputSummary{margin-top:10px;line-height:1.65}.trial-progress{color:var(--muted)}
+@media(max-width:1120px){.sweep-controls{grid-template-columns:repeat(3,1fr)}.sweep-controls>div:first-child{grid-column:1/-1}.research-header h2{font-size:19px}.research-header .pill{display:none}}@media(max-width:800px){.profile-field{max-width:340px}.input-group{max-width:420px}.research-card{padding:18px}.parameters{grid-template-columns:repeat(2,1fr)}.advanced{grid-template-columns:1fr 1fr}.intro{align-items:start}.main-col{grid-row:1}}@media(max-width:570px){.sweep-controls{gap:8px}.sweep-controls label{font-size:10px}.sweep-controls input{padding:8px}.sweep-result-head{align-items:start;flex-direction:column}.research-header h2{font-size:18px}.research-card{padding:16px 12px}.snapshot p{font-size:10px}.check-card{grid-template-columns:1fr;padding:16px 13px}.check-card button{justify-self:start}.parameters,.advanced{grid-template-columns:1fr}.input-preview{padding:12px}.input-preview .chart-head{flex-wrap:wrap}.input-preview svg{height:66px}.stage-top .actions{min-width:106px}}@media print{.sweep-controls,.sweep-status,.check-card,.sweep-table{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="brand"><span class="brandmark" aria-hidden="true">∿</span>GVB · Trillingslab<span class="version">Studentenproject / v3</span></div><div class="local">Lokaal berekend · geen gegevensupload</div></div>
+<main>
+<header class="intro"><div><h1>Van één puls naar een experiment.</h1><p>Pas de invoer aan, onderzoek een reeks en speel elke berekende proef af.</p></div><a class="pill lab-jump" href="#research">Nieuw · Parameteronderzoek ↓</a></header>
+<div class="scope-note"><strong>Synthetisch scenario — geen GVB-meting.</strong> 1 vrijheidsgraad · geen lokale spanning of breukberekening. Pulsen worden achter elkaar doorgerekend; dit zijn geen getelde treinpassages.</div>
+<div class="layout">
+<aside class="card sidebar" id="parameters">
+<button class="mobile-jump" id="backToStage">↑ Terug naar animatie</button>
+<form id="controls">
+<h2>Jouw scenario</h2><p class="small muted">Alle invoer is synthetisch. Kies eerst een profiel.</p>
+<div class="field profile-field"><label for="profile">Invoerprofiel</label><select id="profile" name="profile" class="select-full"><option value="single">Enkele puls</option><option value="repeat" selected>Herhaalde pulsen</option><option value="periodic">Periodieke invoer</option></select></div>
+<div id="repeatFields" class="input-group"><div class="field"><div class="field-head"><label for="pulseCount">Aantal pulsen</label><input class="number" id="pulseCount" name="pulseCount" type="number" min="1" max="40" step="1" value="5" required></div></div><div class="field"><div class="field-head"><label for="intervalMs">Start-tot-starttijd</label><div><input class="number" id="intervalMs" name="intervalMs" type="number" min="1" max="5000" step="any" value="45" required><span class="unit">ms</span></div></div></div><p class="field-help">Van het begin van puls 1 tot het begin van puls 2. De vorige beweging blijft behouden.</p></div>
+<div id="periodicFields" class="input-group" hidden><div class="field"><div class="field-head"><label for="frequency">Invoerfrequentie</label><div><input class="number" id="frequency" name="frequency" type="number" min="0.2" max="300" step="any" value="22" required><span class="unit">Hz</span></div></div></div><div class="field"><div class="field-head"><label for="cycles">Aantal perioden</label><input class="number" id="cycles" name="cycles" type="number" min="1" max="80" step="1" value="12" required></div></div><p class="field-help">Cosinusvormige verlagingen van 0 tot −d. Frequentie en aantal perioden bepalen de duur; ℓ en v zijn hier niet actief.</p></div>
+<div class="parameters">
+<div class="field"><div class="field-head"><label for="depth">Invoeramplitude d</label><div><input class="number" id="depth" name="depth" type="number" min="0" max="20" step="any" value="1" required><span class="unit">mm</span></div></div><input class="range" id="depthRange" aria-label="Invoeramplitude wijzigen" type="range" min="0" max="20" step="0.05" value="1"><div class="ends"><span>0 mm</span><span>20 mm</span></div></div>
+<div class="field"><div class="field-head"><label for="speed">Passagesnelheid v</label><div><input class="number" id="speed" name="speed" type="number" min="1" max="160" step="any" value="36" required><span class="unit">km/u</span></div></div><input class="range" id="speedRange" aria-label="Passagesnelheid wijzigen" type="range" min="1" max="160" step="1" value="36"><div class="ends"><span>1 km/u</span><span>160 km/u</span></div></div>
+<div class="field"><div class="field-head"><label for="damping">Dempingsverhouding ζ</label><div><input class="number" id="damping" name="damping" type="number" min="0" max="1" step="any" value="0.05" required><span class="unit">–</span></div></div><input class="range" id="dampingRange" aria-label="Dempingsverhouding wijzigen" type="range" min="0" max="1" step="0.01" value="0.05"><div class="ends"><span>0 · ongedempt</span><span>1 · kritisch</span></div></div>
+</div>
+<details><summary>Massa, stijfheid en profiellengte</summary><div class="advanced">
+<div class="field"><div class="field-head"><label for="mass">Effectieve massa m</label><div><input class="number wide" id="mass" name="mass" type="number" min="0.1" max="1000" step="any" value="10" required><span class="unit">kg</span></div></div></div>
+<div class="field"><div class="field-head"><label for="stiffness">Stijfheid k</label><div><input class="number wide" id="stiffness" name="stiffness" type="number" min="100" max="10000000" step="any" value="200000" required><span class="unit">N/m</span></div></div></div>
+<div class="field"><div class="field-head"><label for="length">Profiellengte ℓ</label><div><input class="number wide" id="length" name="length" type="number" min="0.01" max="5" step="any" value="0.15" required><span class="unit">m</span></div></div></div>
+</div></details>
+<p id="inputSummary" class="field-help"></p><button class="primary full" type="submit">Scenario berekenen</button><p class="status" id="status" role="status" aria-live="polite">Scenario wordt berekend…</p>
+<label class="check"><input type="checkbox" id="auto" checked>Direct bijwerken na een wijziging</label>
+</form>
+<div class="experiments"><h3>Vergelijk met één klik</h3><div class="experiment-buttons"><button id="experimentRepeat">5 pulsen ↔ 1 puls</button><button id="experimentDouble">2× amplitude</button><button id="experimentUndamped">Zonder demping</button><button id="experimentPeriodic">Periodieke invoer</button></div><p class="field-help">Je huidige scenario wordt eerst als referentie vastgezet als er nog geen referentie is.</p><button class="reset" id="reset">Alle startwaarden herstellen</button></div>
+</aside>
+<section class="main-col" aria-label="Visuele simulatie">
+<div class="card">
+<div class="stage-top"><div><div class="kicker muted">Berekende beweging · live afgespeeld</div><h2>Jullie model, stap voor stap</h2></div><div class="actions"><button class="mobile-jump" id="gotoParams">Parameters wijzigen ↓</button><button id="pin">＋ Referentie vastzetten</button><button id="unpin" hidden>Vergelijking sluiten</button></div></div>
+<div class="stage-area" id="stage">
+<div class="stage-grid" id="stageGrid">
+<div class="scene-panel"><div class="scene-header"><span class="scene-label" id="currentLabel">Jouw scenario</span><span class="scene-info" id="currentInfo"></span></div><div class="scene" id="currentScene"></div><p class="scene-state" id="currentConnection">Verbinding in de evenwichtsstand</p></div>
+<div class="guide" id="guide">
+<div class="step"><span class="step-num">01</span><div><h3>De basis krijgt een beweging</h3><p>De onderste balk volgt het gekozen profiel y(t). Dit is de invoer, niet een berekende railvervorming.</p></div></div>
+<div class="step"><span class="step-num">02</span><div><h3>De massa reageert</h3><p>Het blok beweegt volgens de oplossing x(t). Een volgende puls begint vanuit de vorige positie en snelheid, niet vanuit rust.</p></div></div>
+<div class="step"><span class="step-num">03</span><div><h3>De verbinding verandert van lengte</h3><p>Het verschil z = x − y vervormt de veer. De krachtpijl toont de dynamische reactie op de basis.</p></div></div>
+<div class="guide-legend"><span><i style="background:#89cddd"></i>Basis</span><span><i style="background:#f3c892"></i>Massa</span><span><i style="background:#b6afd8"></i>Reactie</span></div>
+</div>
+<div class="scene-panel" id="refPanel" hidden><div class="scene-header"><span class="scene-label">Vastgezette referentie</span><span class="scene-info" id="refInfo"></span></div><div class="scene" id="referenceScene"></div><p class="scene-state" id="referenceConnection"></p></div>
+</div>
+<div class="view-options"><span id="scaleText">Beweging uitvergroot; geen geometrische schaal.</span><label for="zoomMotion">Weergave <select id="zoomMotion"><option value="1">Uitvergroot</option><option value="0.5">Minder uitvergroot</option></select></label><span>Beide scenario's gebruiken dezelfde schaal.</span></div>
+</div>
+<div class="insight"><span class="phase" id="phase">Voor de puls</span><p id="insightText">Het systeem begint in rust. Speel af om de invoer en reactie te zien.</p></div>
+<div class="transport">
+<div class="transport-row"><div class="transport-buttons"><button class="primary play" id="play" aria-label="Animatie afspelen"><span class="play-icon" aria-hidden="true">▶</span><span id="playText">Afspelen</span></button><button id="restart" title="Terug naar het begin" aria-label="Terug naar het begin">↺</button><button id="peak">Naar piekkracht</button></div><div class="speed-controls"><label for="playSpeed">Afspelen <select id="playSpeed"><option value="0.005">200× vertraagd</option><option value="0.02">50× vertraagd</option><option value="0.05" selected>20× vertraagd</option><option value="0.1">10× vertraagd</option><option value="0.2">5× vertraagd</option><option value="1">Realtime</option></select></label><label class="check"><input type="checkbox" id="loop" >Opnieuw afspelen</label></div></div>
+<div class="timeline-row"><output class="timecode" id="timecode">t = 0,000 s</output><label class="sr" for="timeline">Tijdstip in de simulatie</label><input id="timeline" class="range" type="range" min="0" max="0.515" step="0.00001" value="0"></div><div class="timeline-ticks"><span>0 s</span><span id="pulseLabel">Invoer: 0,050–0,065 s</span><span id="endLabel">0,515 s</span></div>
+</div></div>
+<div class="card input-preview"><div class="chart-head"><h3>Opgelegde invoer y(t)</h3><span id="profileCaption" class="small muted"></span></div><svg id="inputPlot" viewBox="0 0 900 84" role="img" aria-label="Gekozen invoerprofiel met tijdcursor"></svg><p class="field-help">Opnieuw afspelen spoelt alleen de animatie terug. Herhaalde pulsen zijn onderdeel van één doorlopende berekening.</p></div>
+<div class="results-strip">
+<div class="card result"><span class="small">Eigenfrequentie</span><strong id="fn">—</strong><span class="delta" id="fnDelta">Berekend uit m en k</span></div>
+<div class="card result"><span class="small">Max. relatieve uitwijking</span><strong id="zmax">—</strong><span class="delta" id="zDelta">Piek in dit tijdvenster</span></div>
+<div class="card result"><span class="small">Max. dynamische reactiekracht</span><strong id="rmax">—</strong><span class="delta" id="rDelta">Geen breuk- of veiligheidsgrens</span></div>
+</div>
+<div class="card chart-card">
+<div class="chart-head"><div class="tabs" role="tablist" aria-label="Grafiek kiezen"><button role="tab" aria-selected="true" data-mode="motion">Beweging</button><button role="tab" aria-selected="false" data-mode="relative">Relatief</button><button role="tab" aria-selected="false" data-mode="force">Kracht</button></div><label for="chartZoom"><select id="chartZoom" aria-label="Tijdvenster grafiek"><option value="all">Hele tijdvenster</option><option value="pulse">Rond de hele invoerreeks</option></select></label></div>
+<div class="legend" id="legend"></div><div id="chart" class="chart-area"><svg id="plot" viewBox="0 0 900 235" role="img" aria-label="Berekende beweging met een gesynchroniseerde tijdcursor"></svg></div><div class="chart-foot"><span>Klik in de grafiek om naar dat moment te springen.</span><span id="plotUnit">Verplaatsing · mm</span></div>
+<label class="check" id="componentsWrap" hidden style="margin:6px 0"><input id="components" type="checkbox">Veer- en demperbijdrage apart tonen</label>
+<p class="compare-note" id="compareNote" hidden></p>
+</div>
+
+<section class="card research-card" id="research" aria-labelledby="researchTitle">
+<div class="research-header"><div><div class="kicker muted">Onderzoek · Eén parameter tegelijk</div><h2 id="researchTitle">Laat de simulator een reeks berekenen.</h2><p>Alle proeven gebruiken dezelfde basisinstellingen en hetzelfde tijdvenster. Klik daarna op een punt om die proef af te spelen.</p></div><span class="pill">3–61 proeven</span></div>
+<form id="sweepForm" class="sweep-controls">
+<div><label for="sweepKey">Te onderzoeken parameter</label><select id="sweepKey" class="select-full"></select></div>
+<div><label for="sweepMin">Minimum</label><input id="sweepMin" type="number" step="any" value="20" required></div>
+<div><label for="sweepMax">Maximum</label><input id="sweepMax" type="number" step="any" value="100" required></div>
+<div><label for="sweepCount">Aantal proeven</label><input id="sweepCount" type="number" min="3" max="61" step="1" value="25" required></div>
+<div class="sweep-run"><button class="primary" id="sweepStart" type="submit">Onderzoek starten</button><button id="sweepCancel" type="button" hidden>Stoppen</button></div>
+</form>
+<div class="sweep-status"><p id="sweepHelp" class="small muted"></p><p id="sweepStatus" class="small" role="status" aria-live="polite">Klaar voor de eerste reeks.</p><progress id="sweepProgress" max="25" value="0" hidden aria-label="Voortgang parameteronderzoek"></progress></div>
+<div id="sweepEmpty" class="research-empty"><span class="empty-symbol" aria-hidden="true">↗</span><h3>Welke pulsafstand geeft de grootste reactie?</h3><p>Kies bijvoorbeeld 20 tot 100 ms met 25 proeven.<br>De invoeramplitude blijft gelijk; de timing verandert.</p></div>
+<div id="sweepResults" hidden>
+<div class="snapshot"><strong>Vaste basis van deze reeks</strong><p id="sweepSnapshot"></p></div>
+<div class="sweep-result-head"><h3 id="sweepChartTitle">Berekende reactiekracht per proef</h3><select id="sweepMetric" aria-label="Uitkomst voor parametergrafiek"><option value="rmax">Maximum |ΔR| · N</option><option value="zmax">Maximum |z| · mm</option></select></div>
+<svg id="sweepPlot" viewBox="0 0 900 290" role="img" aria-label="Klikbare resultaten van het parameteronderzoek"></svg>
+<p id="sweepInsight" class="sweep-insight"></p><p class="field-help">Alleen berekende punten; de verbindingslijn is een visuele gids. Dit is geen bewijs van een continu maximum, stationaire frequentierespons of schadegrens.</p>
+<div class="sweep-selected" id="selectedTrial" hidden></div>
+<div class="exports"><button id="sweepCSV">Onderzoek CSV</button><button id="sweepJSON">Onderzoek JSON</button></div>
+<details class="sweep-table"><summary>Alle proeven als tabel bekijken</summary><div class="table-scroll"><table><thead><tr><th>Proef</th><th id="sweepColName">Parameter</th><th>Max. |ΔR| (N)</th><th>Max. |z| (mm)</th><th>Actie</th></tr></thead><tbody id="sweepRows"></tbody></table></div></details>
+</div></section>
+<div class="card check-card"><div><h3>Modelcontrole</h3><p class="small muted">Controleer nul-invoer, lineariteit en een twee keer fijnere tijdstap. Dit controleert de berekening, niet de fysieke juistheid.</p></div><button id="runCheck">Rekencontrole uitvoeren</button><p id="checkStatus" class="small" role="status">Nog niet uitgevoerd voor dit scenario.</p></div>
+
+<div class="card details-card"><details><summary>Wat wordt berekend — en wat niet?</summary><div class="details-content">
+<div class="equation">m ẍ + c(ẋ − ẏ) + k(x − y) = 0<br>z = x − y &nbsp; · &nbsp; ΔR = kz + c(ẋ − ẏ)<br>c = 2ζ√(km) &nbsp; · &nbsp; fₙ = √(k/m) / (2π)</div>
+<h3>Eén toestand, ook tussen pulsen</h3><p>Dit blijft een lineair model met één vrijheidsgraad. De positie x en snelheid ẋ lopen door tussen de pulsen. Alleen bij het begin van een nieuw scenario starten ze op nul. De animatie volgt de berekende tijdreeks; de weergaveschaal verandert de uitkomst niet. ΔR is de kracht op de basis, −ΔR de kracht op de massa. Positief is omhoog.</p>
+<h3>Drie invoerprofielen</h3><p>Een puls heeft y = −d[1 − cos(2πτ/T)]/2, met T = ℓ/v en start t₀ = 0,05 s. Herhaalde pulsen beginnen op t₀ + jΔt; hun start-tot-starttijd Δt moet minstens T zijn. Bij periodieke invoer volgen N cosinusperioden elkaar zonder pauze op, met T = 1/f. Deze invoer ligt tussen −d en 0 en heeft tijdens de reeks een gemiddelde van −d/2. y en ẏ zijn continu aan de uiteinden; ÿ kan daar verspringen. Een eindige reeks is geen stationaire frequentierespons.</p>
+<h3>Reeksen vergelijken</h3><p>Bij een parameteronderzoek verandert één parameter. Het observatievenster is voor alle proeven hetzelfde: tot het einde van de langste invoer plus minimaal 0,45 s en acht eigenperioden van het langzaamste systeem. De begintoestand is voor elke afzonderlijke proef opnieuw in rust. Klikken op een punt gebruikt precies dit tijdvenster, met de vaste basis van die reeks als referentie. De piek geldt alleen binnen dit venster.</p>
+<h3>Wat is niet berekend?</h3><p>Het zijn synthetische equivalente basisbewegingen, geen gevalideerde overdracht van een spoorstaafdefect. Geen statische belasting, montagevoorspanning, contactverlies, speling, lokale spanning, materiaalbeschadiging of vermoeiingslevensduur. Herhaalde pulsen zijn geen getelde treinpassages. De kleuren en pijlen geven geen veiligheid aan. m is geen treinmassa; k is niet bewezen de stijfheid van het neusdeel.</p>
+<h3>Numeriek</h3><p>Vierde-orde Runge–Kutta, opgesplitst bij elke pulsgrens; minimaal 200 stappen per eigenperiode en 400 per invoerperiode tijdens invoer. De toestand wordt behouden bij iedere grens. Berekening in SI, weergave in mm en km/u. Automatische tests vergelijken de drie profielen met een onafhankelijke SciPy/DOP853-oplossing. Een parameteronderzoek draait lokaal in een aparte rekenworker; zonder worker wordt per proef teruggeschakeld naar de interface. Maximaal 300.000 stappen per proef en 120 s observatie; dit zijn numerieke grenzen, geen bedrijfsgrenzen.</p>
+</div></details>
+<div class="exports"><button id="saveScenario">Scenario opslaan</button><button id="loadScenario">Scenario laden</button><input id="importFile" type="file" accept="application/json,.json" hidden><button id="csv">Resultaten CSV</button><button id="share">Scenario delen</button><p>Scenario's worden als JSON bewaard. De CSV bevat alle berekende tijdmonsters in SI-eenheden. Scenario's uit v2 kunnen als enkele puls worden ingelezen.</p></div>
+</div>
+</section>
+</div>
+<footer><span>GVB · IP Project / Experimentenlab v3.0 NL · Studentenwerk, geen officiële GVB-software.</span><span>Geen bestanden worden naar een server verstuurd.</span></footer>
+</main>
+<div class="toast" role="status" id="toast" hidden></div>
+<noscript><p>Schakel JavaScript in om de lokale berekening en animatie te gebruiken.</p></noscript>
+<script>/* Rekenmodel v3. Eenheden van de interface staan in units; intern uitsluitend SI.
+ * Alle standaardwaarden zijn synthetische scenario's, geen GVB-metingen.
+ * De toestand x, x' wordt NOOIT opnieuw ingesteld tussen invoerpulsen.
+ */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.GVBModel = factory();
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const defaults = Object.freeze({mass:10,stiffness:200000,damping:.05,depth:1,length:.15,speed:36,
+    profile:'repeat',pulseCount:5,intervalMs:45,frequency:22,cycles:12});
+  const bounds = Object.freeze({mass:[.1,1000],stiffness:[100,1e7],damping:[0,1],depth:[0,20],
+    length:[.01,5],speed:[1,160],pulseCount:[1,40],intervalMs:[1,5000],frequency:[.2,300],cycles:[1,80]});
+  const labels = Object.freeze({mass:'Effectieve massa',stiffness:'Stijfheid',damping:'Dempingsverhouding',depth:'Invoeramplitude',
+    length:'Profiellengte',speed:'Passagesnelheid',pulseCount:'Aantal pulsen',intervalMs:'Start-tot-starttijd',frequency:'Invoerfrequentie',cycles:'Aantal perioden'});
+  const units = Object.freeze({mass:'kg',stiffness:'N/m',damping:'–',depth:'mm',length:'m',speed:'km/u',
+    pulseCount:'pulsen',intervalMs:'ms',frequency:'Hz',cycles:'perioden'});
+  const profiles = Object.freeze({single:'Enkele puls',repeat:'Herhaalde pulsen',periodic:'Periodieke invoer'});
+  function validate(input) {
+    if (!input || typeof input!=='object' || Array.isArray(input)) throw new Error('Geen geldig scenario.');
+    // Oudere scenariobestanden hebben zes velden en altijd één puls.
+    const p={...defaults,...input}; if (!('profile' in input)) p.profile='single';
+    if (!Object.hasOwn(profiles,p.profile)) throw new Error('Onbekend invoerprofiel.');
+    const q={profile:p.profile};
+    for (const [key,[lo,hi]] of Object.entries(bounds)) {
+      const v=p[key];
+      if (typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi) throw new Error(`${labels[key]}: kies een getal tussen ${lo} en ${hi}.`);
+      if (['pulseCount','cycles'].includes(key)&&!Number.isInteger(v)) throw new Error(`${labels[key]} moet een geheel getal zijn.`);
+      q[key]=v;
+    }
+    const T=q.length/(q.speed/3.6);
+    if(q.profile==='repeat'&&q.pulseCount>1&&q.intervalMs/1000<T-1e-12)
+      throw new Error(`Pulsen mogen niet overlappen: kies een start-tot-starttijd van minimaal ${(1000*T).toFixed(2)} ms, of verkort de puls.`);
+    return q;
+  }
+  function characteristics(p) {
+    const wn=Math.sqrt(p.stiffness/p.mass),fn=wn/(2*Math.PI),c=2*p.damping*Math.sqrt(p.stiffness*p.mass),t0=.05;
+    const T=p.profile==='periodic'?1/p.frequency:p.length/(p.speed/3.6);
+    const count=p.profile==='single'?1:p.profile==='repeat'?p.pulseCount:p.cycles;
+    const interval=p.profile==='repeat'?p.intervalMs/1000:T;
+    const excitationEnd=t0+(count-1)*interval+T;
+    const events=Array.from({length:count},(_,i)=>({start:t0+i*interval,end:t0+i*interval+T,index:i+1}));
+    return {wn,fn,c,t0,T,count,interval,excitationEnd,events};
+  }
+  function base(t,p,ch=characteristics(p)) {
+    const tau=t-ch.t0;
+    if(tau<=0||t>=ch.excitationEnd) return [0,0];
+    const j=Math.min(ch.count-1,Math.floor(tau/ch.interval));
+    const local=tau-j*ch.interval;
+    if(local<=0||local>=ch.T) return [0,0];
+    const angle=2*Math.PI*local/ch.T,d=p.depth/1000;
+    return [-d*(1-Math.cos(angle))/2,-d*Math.PI/ch.T*Math.sin(angle)];
+  }
+  function sharedEnd(params) {
+    const ch=params.map(p=>characteristics(validate(p)));
+    const end=Math.max(...ch.map(a=>a.excitationEnd))+Math.max(.45,...ch.map(a=>8/a.fn));
+    if(!Number.isFinite(end)||end>120)throw new Error('Dit scenario duurt meer dan 120 s. Kies minder pulsen/perioden of een kortere start-tot-starttijd.');
+    return end;
+  }
+  function plan(p,end,resolution=1) {
+    const ch=characteristics(p);
+    if(!Number.isFinite(end)||end<ch.excitationEnd+.001||end>120)throw new Error('Ongeldig tijdvenster. Er moet ook na de laatste invoer worden gerekend.');
+    if(!Number.isFinite(resolution)||resolution<1||resolution>8)throw new Error('Ongeldige tijdresolutie.');
+    const raw=[0,ch.t0,...ch.events.flatMap(e=>[e.start,e.end]),end].sort((a,b)=>a-b);
+    const breaks=raw.filter((t,i)=>i===0||t-raw[i-1]>1e-11);
+    const intervals=[];
+    let total=1;
+    for(let i=1;i<breaks.length;i++) {
+      const a=breaks[i-1],b=breaks[i],mid=(a+b)/2;
+      const active=ch.events.some(e=>mid>e.start&&mid<e.end);
+      const rate=Math.max(ch.fn*200,active?400/ch.T:0)*resolution;
+      const n=Math.max(20,Math.ceil((b-a)*rate));
+      intervals.push({a,b,n});total+=n;
+    }
+    if(total>300000)throw new Error('Meer dan 300.000 tijdstappen nodig. Kies minder perioden/pulsen, een korter tijdvenster of een kleinere verhouding k/m.');
+    return {ch,intervals,total};
+  }
+  function solve(input=defaults,options={}) {
+    const p=validate(input),end=options.end??sharedEnd([p]),resolution=options.resolution??1;
+    const {ch,intervals,total}=plan(p,end,resolution),keep=options.summaryOnly!==true;
+    const r={p,...ch,end,samples:total,t:[],x:[],velocity:[],y:[],yVelocity:[],z:[],reaction:[],spring:[],damper:[],acceleration:[],
+      rmax:0,zmax:0,xmax:0,peakTime:0,peakIndex:0};
+    let x=0,u=0,index=0;
+    function acc(t,xx,uu){const[y,yd]=base(t,p,ch);return -(p.stiffness*(xx-y)+ch.c*(uu-yd))/p.mass;}
+    function record(t) {
+      const[y,yd]=base(t,p,ch),z=x-y,fs=p.stiffness*z,fd=ch.c*(u-yd),R=fs+fd;
+      if(!Number.isFinite(x)||!Number.isFinite(R))throw new Error('Niet-eindige uitkomst. Controleer de invoer en tijdresolutie.');
+      if(Math.abs(R)>r.rmax){r.rmax=Math.abs(R);r.peakTime=t;r.peakIndex=index;}
+      r.zmax=Math.max(r.zmax,Math.abs(z));r.xmax=Math.max(r.xmax,Math.abs(x));
+      if(keep){r.t.push(t);r.x.push(x);r.velocity.push(u);r.y.push(y);r.yVelocity.push(yd);r.z.push(z);r.reaction.push(R);r.spring.push(fs);r.damper.push(fd);r.acceleration.push(-R/p.mass);}
+      index++;
+    }
+    record(0);
+    for(const {a,b,n} of intervals) {
+      const h=(b-a)/n;
+      for(let j=0;j<n;j++) {
+        const t=a+j*h;
+        // Het interval vóór de eerste invoer is exact in rust. Alle latere toestanden worden doorgerekend.
+        if(b>ch.t0+1e-12) {
+          const a1=u,b1=acc(t,x,u),a2=u+h*b1/2,b2=acc(t+h/2,x+h*a1/2,u+h*b1/2);
+          const a3=u+h*b2/2,b3=acc(t+h/2,x+h*a2/2,u+h*b2/2),a4=u+h*b3,b4=acc(t+h,x+h*a3,u+h*b3);
+          x+=h*(a1+2*a2+2*a3+a4)/6;u+=h*(b1+2*b2+2*b3+b4)/6;
+        }
+        record(a+(j+1)*h);
+      }
+    }
+    return r;
+  }
+  function sample(r,time) {
+    if(!r.t.length)throw new Error('Geen tijdreeks beschikbaar. Bereken dit scenario opnieuw.');
+    const t=Math.max(0,Math.min(r.end,time)),a=r.t;
+    let lo=0,hi=a.length-1;
+    while(hi-lo>1){const mid=(lo+hi)>>1;if(a[mid]<=t)lo=mid;else hi=mid;}
+    const h=a[hi]-a[lo],s=(t-a[lo])/h,s2=s*s,s3=s2*s;
+    const x=(2*s3-3*s2+1)*r.x[lo]+(s3-2*s2+s)*h*r.velocity[lo]+(-2*s3+3*s2)*r.x[hi]+(s3-s2)*h*r.velocity[hi];
+    const u=(6*s2-6*s)/h*r.x[lo]+(3*s2-4*s+1)*r.velocity[lo]+(-6*s2+6*s)/h*r.x[hi]+(3*s2-2*s)*r.velocity[hi];
+    const[y,yd]=base(t,r.p,r),z=x-y,spring=r.p.stiffness*z,damper=r.c*(u-yd);
+    return {t,x,u,y,yd,z,spring,damper,reaction:spring+damper};
+  }
+  function sweepKeys(profile) {
+    return ['mass','stiffness','damping','depth',...(profile==='periodic'?['frequency','cycles']:['speed','length']),...(profile==='repeat'?['intervalMs','pulseCount']:[])];
+  }
+  function makeSweep(input,key,min,max,count) {
+    const baseline=validate(input);
+    if(!sweepKeys(baseline.profile).includes(key))throw new Error('Deze parameter is niet actief bij het gekozen invoerprofiel.');
+    if(![min,max,count].every(Number.isFinite)||min>=max||!Number.isInteger(count)||count<3||count>61)throw new Error('Kies minimum < maximum en 3–61 proeven.');
+    const integral=['cycles','pulseCount'].includes(key);
+    if(integral&&(!Number.isInteger(min)||!Number.isInteger(max)||count>max-min+1))throw new Error('Kies gehele grenzen en niet meer proeven dan verschillende gehele waarden.');
+    const values=Array.from({length:count},(_,i)=>{const v=min+(max-min)*i/(count-1);return integral?Math.round(v):v;});
+    const scenarios=values.map(v=>validate({...baseline,[key]:v}));
+    const end=sharedEnd([baseline,...scenarios]);
+    for(const p of [baseline,...scenarios])plan(p,end);
+    return {key,min,max,count,values,scenarios,baseline,end,units:units[key],label:labels[key]};
+  }
+  function summary(r) {return {parameters:{...r.p},fn:r.fn,rmax:r.rmax,zmax:r.zmax,xmax:r.xmax,peakTime:r.peakTime,end:r.end,samples:r.samples};}
+  function numericalCheck(input) {
+    const p=validate(input),end=sharedEnd([p]);
+    const coarse=solve(p,{end,summaryOnly:true}),fine=solve(p,{end,resolution:2,summaryOnly:true});
+    const zero=solve({...p,depth:0},{end,summaryOnly:true}),half=solve({...p,depth:p.depth/2},{end,summaryOnly:true});
+    const rel=(a,b)=>Math.abs(a-b)/Math.max(Math.abs(b),1e-12);
+    const errors={force:rel(coarse.rmax,fine.rmax),motion:rel(coarse.zmax,fine.zmax),linearity:rel(half.rmax*2,coarse.rmax),zero:Math.max(zero.rmax,zero.zmax)};
+    return {passed:errors.force<.002&&errors.motion<.002&&errors.linearity<1e-8&&errors.zero<1e-10,errors,end,
+      note:'Numerieke controles, geen fysieke validatie of beoordeling van veiligheid.'};
+  }
+  return Object.freeze({defaults,bounds,labels,units,profiles,validate,characteristics,base,sharedEnd,plan,solve,sample,sweepKeys,makeSweep,summary,numericalCheck});
+});
+</script>
+<script type="text/plain" id="workerCode">/* Rekenmodel v3. Eenheden van de interface staan in units; intern uitsluitend SI.
+ * Alle standaardwaarden zijn synthetische scenario's, geen GVB-metingen.
+ * De toestand x, x' wordt NOOIT opnieuw ingesteld tussen invoerpulsen.
+ */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.GVBModel = factory();
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const defaults = Object.freeze({mass:10,stiffness:200000,damping:.05,depth:1,length:.15,speed:36,
+    profile:'repeat',pulseCount:5,intervalMs:45,frequency:22,cycles:12});
+  const bounds = Object.freeze({mass:[.1,1000],stiffness:[100,1e7],damping:[0,1],depth:[0,20],
+    length:[.01,5],speed:[1,160],pulseCount:[1,40],intervalMs:[1,5000],frequency:[.2,300],cycles:[1,80]});
+  const labels = Object.freeze({mass:'Effectieve massa',stiffness:'Stijfheid',damping:'Dempingsverhouding',depth:'Invoeramplitude',
+    length:'Profiellengte',speed:'Passagesnelheid',pulseCount:'Aantal pulsen',intervalMs:'Start-tot-starttijd',frequency:'Invoerfrequentie',cycles:'Aantal perioden'});
+  const units = Object.freeze({mass:'kg',stiffness:'N/m',damping:'–',depth:'mm',length:'m',speed:'km/u',
+    pulseCount:'pulsen',intervalMs:'ms',frequency:'Hz',cycles:'perioden'});
+  const profiles = Object.freeze({single:'Enkele puls',repeat:'Herhaalde pulsen',periodic:'Periodieke invoer'});
+  function validate(input) {
+    if (!input || typeof input!=='object' || Array.isArray(input)) throw new Error('Geen geldig scenario.');
+    // Oudere scenariobestanden hebben zes velden en altijd één puls.
+    const p={...defaults,...input}; if (!('profile' in input)) p.profile='single';
+    if (!Object.hasOwn(profiles,p.profile)) throw new Error('Onbekend invoerprofiel.');
+    const q={profile:p.profile};
+    for (const [key,[lo,hi]] of Object.entries(bounds)) {
+      const v=p[key];
+      if (typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi) throw new Error(`${labels[key]}: kies een getal tussen ${lo} en ${hi}.`);
+      if (['pulseCount','cycles'].includes(key)&&!Number.isInteger(v)) throw new Error(`${labels[key]} moet een geheel getal zijn.`);
+      q[key]=v;
+    }
+    const T=q.length/(q.speed/3.6);
+    if(q.profile==='repeat'&&q.pulseCount>1&&q.intervalMs/1000<T-1e-12)
+      throw new Error(`Pulsen mogen niet overlappen: kies een start-tot-starttijd van minimaal ${(1000*T).toFixed(2)} ms, of verkort de puls.`);
+    return q;
+  }
+  function characteristics(p) {
+    const wn=Math.sqrt(p.stiffness/p.mass),fn=wn/(2*Math.PI),c=2*p.damping*Math.sqrt(p.stiffness*p.mass),t0=.05;
+    const T=p.profile==='periodic'?1/p.frequency:p.length/(p.speed/3.6);
+    const count=p.profile==='single'?1:p.profile==='repeat'?p.pulseCount:p.cycles;
+    const interval=p.profile==='repeat'?p.intervalMs/1000:T;
+    const excitationEnd=t0+(count-1)*interval+T;
+    const events=Array.from({length:count},(_,i)=>({start:t0+i*interval,end:t0+i*interval+T,index:i+1}));
+    return {wn,fn,c,t0,T,count,interval,excitationEnd,events};
+  }
+  function base(t,p,ch=characteristics(p)) {
+    const tau=t-ch.t0;
+    if(tau<=0||t>=ch.excitationEnd) return [0,0];
+    const j=Math.min(ch.count-1,Math.floor(tau/ch.interval));
+    const local=tau-j*ch.interval;
+    if(local<=0||local>=ch.T) return [0,0];
+    const angle=2*Math.PI*local/ch.T,d=p.depth/1000;
+    return [-d*(1-Math.cos(angle))/2,-d*Math.PI/ch.T*Math.sin(angle)];
+  }
+  function sharedEnd(params) {
+    const ch=params.map(p=>characteristics(validate(p)));
+    const end=Math.max(...ch.map(a=>a.excitationEnd))+Math.max(.45,...ch.map(a=>8/a.fn));
+    if(!Number.isFinite(end)||end>120)throw new Error('Dit scenario duurt meer dan 120 s. Kies minder pulsen/perioden of een kortere start-tot-starttijd.');
+    return end;
+  }
+  function plan(p,end,resolution=1) {
+    const ch=characteristics(p);
+    if(!Number.isFinite(end)||end<ch.excitationEnd+.001||end>120)throw new Error('Ongeldig tijdvenster. Er moet ook na de laatste invoer worden gerekend.');
+    if(!Number.isFinite(resolution)||resolution<1||resolution>8)throw new Error('Ongeldige tijdresolutie.');
+    const raw=[0,ch.t0,...ch.events.flatMap(e=>[e.start,e.end]),end].sort((a,b)=>a-b);
+    const breaks=raw.filter((t,i)=>i===0||t-raw[i-1]>1e-11);
+    const intervals=[];
+    let total=1;
+    for(let i=1;i<breaks.length;i++) {
+      const a=breaks[i-1],b=breaks[i],mid=(a+b)/2;
+      const active=ch.events.some(e=>mid>e.start&&mid<e.end);
+      const rate=Math.max(ch.fn*200,active?400/ch.T:0)*resolution;
+      const n=Math.max(20,Math.ceil((b-a)*rate));
+      intervals.push({a,b,n});total+=n;
+    }
+    if(total>300000)throw new Error('Meer dan 300.000 tijdstappen nodig. Kies minder perioden/pulsen, een korter tijdvenster of een kleinere verhouding k/m.');
+    return {ch,intervals,total};
+  }
+  function solve(input=defaults,options={}) {
+    const p=validate(input),end=options.end??sharedEnd([p]),resolution=options.resolution??1;
+    const {ch,intervals,total}=plan(p,end,resolution),keep=options.summaryOnly!==true;
+    const r={p,...ch,end,samples:total,t:[],x:[],velocity:[],y:[],yVelocity:[],z:[],reaction:[],spring:[],damper:[],acceleration:[],
+      rmax:0,zmax:0,xmax:0,peakTime:0,peakIndex:0};
+    let x=0,u=0,index=0;
+    function acc(t,xx,uu){const[y,yd]=base(t,p,ch);return -(p.stiffness*(xx-y)+ch.c*(uu-yd))/p.mass;}
+    function record(t) {
+      const[y,yd]=base(t,p,ch),z=x-y,fs=p.stiffness*z,fd=ch.c*(u-yd),R=fs+fd;
+      if(!Number.isFinite(x)||!Number.isFinite(R))throw new Error('Niet-eindige uitkomst. Controleer de invoer en tijdresolutie.');
+      if(Math.abs(R)>r.rmax){r.rmax=Math.abs(R);r.peakTime=t;r.peakIndex=index;}
+      r.zmax=Math.max(r.zmax,Math.abs(z));r.xmax=Math.max(r.xmax,Math.abs(x));
+      if(keep){r.t.push(t);r.x.push(x);r.velocity.push(u);r.y.push(y);r.yVelocity.push(yd);r.z.push(z);r.reaction.push(R);r.spring.push(fs);r.damper.push(fd);r.acceleration.push(-R/p.mass);}
+      index++;
+    }
+    record(0);
+    for(const {a,b,n} of intervals) {
+      const h=(b-a)/n;
+      for(let j=0;j<n;j++) {
+        const t=a+j*h;
+        // Het interval vóór de eerste invoer is exact in rust. Alle latere toestanden worden doorgerekend.
+        if(b>ch.t0+1e-12) {
+          const a1=u,b1=acc(t,x,u),a2=u+h*b1/2,b2=acc(t+h/2,x+h*a1/2,u+h*b1/2);
+          const a3=u+h*b2/2,b3=acc(t+h/2,x+h*a2/2,u+h*b2/2),a4=u+h*b3,b4=acc(t+h,x+h*a3,u+h*b3);
+          x+=h*(a1+2*a2+2*a3+a4)/6;u+=h*(b1+2*b2+2*b3+b4)/6;
+        }
+        record(a+(j+1)*h);
+      }
+    }
+    return r;
+  }
+  function sample(r,time) {
+    if(!r.t.length)throw new Error('Geen tijdreeks beschikbaar. Bereken dit scenario opnieuw.');
+    const t=Math.max(0,Math.min(r.end,time)),a=r.t;
+    let lo=0,hi=a.length-1;
+    while(hi-lo>1){const mid=(lo+hi)>>1;if(a[mid]<=t)lo=mid;else hi=mid;}
+    const h=a[hi]-a[lo],s=(t-a[lo])/h,s2=s*s,s3=s2*s;
+    const x=(2*s3-3*s2+1)*r.x[lo]+(s3-2*s2+s)*h*r.velocity[lo]+(-2*s3+3*s2)*r.x[hi]+(s3-s2)*h*r.velocity[hi];
+    const u=(6*s2-6*s)/h*r.x[lo]+(3*s2-4*s+1)*r.velocity[lo]+(-6*s2+6*s)/h*r.x[hi]+(3*s2-2*s)*r.velocity[hi];
+    const[y,yd]=base(t,r.p,r),z=x-y,spring=r.p.stiffness*z,damper=r.c*(u-yd);
+    return {t,x,u,y,yd,z,spring,damper,reaction:spring+damper};
+  }
+  function sweepKeys(profile) {
+    return ['mass','stiffness','damping','depth',...(profile==='periodic'?['frequency','cycles']:['speed','length']),...(profile==='repeat'?['intervalMs','pulseCount']:[])];
+  }
+  function makeSweep(input,key,min,max,count) {
+    const baseline=validate(input);
+    if(!sweepKeys(baseline.profile).includes(key))throw new Error('Deze parameter is niet actief bij het gekozen invoerprofiel.');
+    if(![min,max,count].every(Number.isFinite)||min>=max||!Number.isInteger(count)||count<3||count>61)throw new Error('Kies minimum < maximum en 3–61 proeven.');
+    const integral=['cycles','pulseCount'].includes(key);
+    if(integral&&(!Number.isInteger(min)||!Number.isInteger(max)||count>max-min+1))throw new Error('Kies gehele grenzen en niet meer proeven dan verschillende gehele waarden.');
+    const values=Array.from({length:count},(_,i)=>{const v=min+(max-min)*i/(count-1);return integral?Math.round(v):v;});
+    const scenarios=values.map(v=>validate({...baseline,[key]:v}));
+    const end=sharedEnd([baseline,...scenarios]);
+    for(const p of [baseline,...scenarios])plan(p,end);
+    return {key,min,max,count,values,scenarios,baseline,end,units:units[key],label:labels[key]};
+  }
+  function summary(r) {return {parameters:{...r.p},fn:r.fn,rmax:r.rmax,zmax:r.zmax,xmax:r.xmax,peakTime:r.peakTime,end:r.end,samples:r.samples};}
+  function numericalCheck(input) {
+    const p=validate(input),end=sharedEnd([p]);
+    const coarse=solve(p,{end,summaryOnly:true}),fine=solve(p,{end,resolution:2,summaryOnly:true});
+    const zero=solve({...p,depth:0},{end,summaryOnly:true}),half=solve({...p,depth:p.depth/2},{end,summaryOnly:true});
+    const rel=(a,b)=>Math.abs(a-b)/Math.max(Math.abs(b),1e-12);
+    const errors={force:rel(coarse.rmax,fine.rmax),motion:rel(coarse.zmax,fine.zmax),linearity:rel(half.rmax*2,coarse.rmax),zero:Math.max(zero.rmax,zero.zmax)};
+    return {passed:errors.force<.002&&errors.motion<.002&&errors.linearity<1e-8&&errors.zero<1e-10,errors,end,
+      note:'Numerieke controles, geen fysieke validatie of beoordeling van veiligheid.'};
+  }
+  return Object.freeze({defaults,bounds,labels,units,profiles,validate,characteristics,base,sharedEnd,plan,solve,sample,sweepKeys,makeSweep,summary,numericalCheck});
+});
+
+/* Losse rekenworker, volledig lokaal. De hoofdthread blijft de animatie tekenen. */
+self.onmessage = function ({data}) {
+  try {
+    const M=self.GVBModel;
+    if(data.kind==='check') {self.postMessage({kind:'check',result:M.numericalCheck(data.parameters)});return;}
+    if(data.kind!=='sweep')throw new Error('Onbekende rekentaak.');
+    const p=M.makeSweep(data.parameters,data.key,data.min,data.max,data.count);
+    self.postMessage({kind:'plan',plan:p});
+    for(let i=0;i<p.scenarios.length;i++) {
+      const r=M.solve(p.scenarios[i],{end:p.end,summaryOnly:true});
+      self.postMessage({kind:'row',row:{...M.summary(r),index:i,value:p.values[i]},completed:i+1,total:p.count});
+    }
+    self.postMessage({kind:'done'});
+  } catch(error) {self.postMessage({kind:'error',message:error.message});}
+};
+</script>
+<script>/* Visuele laag v3. De animatie gebruikt uitsluitend Model.sample(resultaat,t).
+ * Geen vervormings- of breukanimatie van een echte isolator.
+ */
+(() => {
+'use strict';
+const M=window.GVBModel, $=id=>document.getElementById(id);
+const fmt=(v,d=2)=> (Math.abs(v)<Math.pow(10,-d)/2?0:v).toLocaleString('nl-NL',{minimumFractionDigits:d,maximumFractionDigits:d});
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+let params={...M.defaults},referenceParams=null,result=null,reference=null,time=0,running=false,prevStamp=null,holdUntil=0;
+let mode='motion',scale=50000,forceScale=1,end=.515,debounce=null,toastTimer=null,plotSeries=[],plotMax=.515,plotLo=-1,plotHi=1;
+let dirty=true;
+let sweep=null,sweepWorker=null,sweepToken=0,sweepBusy=false,checkWorker=null,checkToken=0,lastProfile=null;
+const svgNS='http://www.w3.org/2000/svg';
+function sceneTemplate(id){return `<svg viewBox="0 0 460 390" role="img" aria-label="Bewegend equivalent massa–veer–dempermodel">
+<defs><pattern id="${id}-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 H 0 V 24" fill="none" stroke="#e5eef2" stroke-opacity=".04"/></pattern></defs>
+<rect x="0" y="0" width="460" height="390" fill="url(#${id}-grid)"/>
+<line x1="108" y1="105" x2="350" y2="105" stroke="#d6e7ee" stroke-opacity=".25" stroke-dasharray="3 5"/>
+<line x1="108" y1="280" x2="350" y2="280" stroke="#d6e7ee" stroke-opacity=".25" stroke-dasharray="3 5"/>
+<rect x="125" y="74" width="150" height="62" rx="8" stroke="#e5eef2" stroke-opacity=".18" fill="none" stroke-dasharray="4 5"/>
+<path id="${id}-spring" fill="none" stroke="#dce8ee" stroke-width="2.8" stroke-linejoin="round"/>
+<path id="${id}-piston" fill="none" stroke="#dce8ee" stroke-width="2.5"/>
+<g id="${id}-cylinder"><path d="M-13 -116 L-13 -6 L13 -6 L13 -116" fill="#223742" stroke="#dce8ee" stroke-width="2.2"/><line x1="0" y1="-6" x2="0" y2="0" stroke="#dce8ee" stroke-width="2.2"/></g>
+<text x="118" y="218" font-size="15" fill="#c2d4dd" font-style="italic">k</text><text x="262" y="218" font-size="15" fill="#c2d4dd" font-style="italic">c</text>
+<g id="${id}-mass"><rect x="125" y="-31" width="150" height="62" rx="8" fill="#f3c892"/><rect x="128" y="-28" width="144" height="5" rx="3" fill="#fff" opacity=".25"/><text x="200" y="-2" text-anchor="middle" fill="#263239" font-size="24" font-style="italic">m</text><text x="200" y="18" text-anchor="middle" fill="#465159" font-size="9">effectieve massa</text></g>
+<g id="${id}-basis"><rect x="100" y="0" width="200" height="15" rx="4" fill="#89cddd"/><path d="M105 29 l14 -14 M125 29 l14 -14 M145 29 l14 -14 M165 29 l14 -14 M185 29 l14 -14 M205 29 l14 -14 M225 29 l14 -14 M245 29 l14 -14 M265 29 l14 -14 M285 29 l10 -10" stroke="#89cddd" stroke-width="1.2" opacity=".65"/><text x="200" y="47" text-anchor="middle" fill="#a6dcea" font-size="10">voorgeschreven basisbeweging</text></g>
+<path id="${id}-xArrow" fill="none" stroke="#f3c892" stroke-width="1.5"/>
+<path id="${id}-yArrow" fill="none" stroke="#89cddd" stroke-width="1.5"/>
+<text x="353" y="74" font-size="11" fill="#f3c892">x(t)</text><text id="${id}-xValue" x="353" y="91" font-size="12" fill="#e5eef2" class="diagram-detail">0,00 mm</text>
+<text x="353" y="249" font-size="11" fill="#89cddd">y(t)</text><text id="${id}-yValue" x="353" y="266" font-size="12" fill="#e5eef2" class="diagram-detail">0,00 mm</text>
+<text x="353" y="173" font-size="11" fill="#b8cbd5">z = x − y</text><text id="${id}-zValue" x="353" y="190" font-size="12" fill="#e5eef2" class="diagram-detail">0,00 mm</text>
+<path id="${id}-force" fill="none" stroke="#b6afd8" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="25" y="361" font-size="11" fill="#c6c0e5">ΔR op basis</text><text id="${id}-rValue" x="25" y="379" font-size="13" fill="#e5eef2" class="diagram-detail">0,0 N</text>
+<path d="M408 28 V12 M403 18 L408 12 L413 18" stroke="#a9bdc7" stroke-width="1.3" fill="none"/><text x="422" y="24" font-size="11" fill="#a9bdc7">+</text>
+<text x="282" y="379" font-size="9" fill="#8ea7b4">Schema · geen CAD-vervorming</text>
+</svg>`;}
+$('currentScene').innerHTML=sceneTemplate('cur');$('referenceScene').innerHTML=sceneTemplate('ref');
+// Teken de zuiger bovenop de behuizing (zichtbaar in de cilinder).
+for(const id of ['cur','ref'])$(`${id}-cylinder`).after($(`${id}-piston`));
+const sceneCache={};
+for(const id of ['cur','ref'])sceneCache[id]=Object.fromEntries(['mass','basis','spring','piston','cylinder','xArrow','yArrow','force','xValue','yValue','zValue','rValue'].map(k=>[k,$(`${id}-${k}`)]));
+function arrow(x,y,dy,head=5){if(Math.abs(dy)<.3)return `M${x-3} ${y}H${x+3}`;head=Math.min(head,Math.abs(dy)*.45);const e=y+dy,sg=Math.sign(dy);return `M${x} ${y}L${x} ${e}M${x-head} ${e-sg*head}L${x} ${e}L${x+head} ${e-sg*head}`;}
+function springPath(x,top,bottom){const a=top+12,b=bottom-12;let d=`M${x} ${top}V${a}`;for(let j=0;j<12;j++)d+=`L${x+(j%2===0?-12:12)} ${a+(b-a)*(j+.5)/12}`;return d+`L${x} ${b}V${bottom}`;}
+function updateScene(id,r,s){
+ const e=sceneCache[id],my=105-s.x*scale,by=280-s.y*scale;
+ e.mass.setAttribute('transform',`translate(0 ${my})`);e.basis.setAttribute('transform',`translate(0 ${by})`);
+ e.spring.setAttribute('d',springPath(164,my+31,by));
+ e.cylinder.setAttribute('transform',`translate(235 ${by})`);
+ const pistonEnd=my+112; // Zuigerstang heeft constante lengte; zuiger beweegt mee met de massa.
+ e.piston.setAttribute('d',`M235 ${my+31}V${pistonEnd}M223 ${pistonEnd}H247`);
+ e.xArrow.setAttribute('d',arrow(332,105,-s.x*scale));e.yArrow.setAttribute('d',arrow(332,280,-s.y*scale));
+ const forceLength=-65*s.reaction/forceScale;
+ e.force.setAttribute('d',arrow(70,by+7,forceLength,6));
+ e.xValue.textContent=fmt(s.x*1000,2)+' mm';e.yValue.textContent=fmt(s.y*1000,2)+' mm';e.zValue.textContent=fmt(s.z*1000,2)+' mm';e.rValue.textContent=fmt(s.reaction,1)+' N';
+ const tolerance=Math.max(1e-9,r.zmax*.004);
+ $(id==='cur'?'currentConnection':'referenceConnection').textContent=Math.abs(s.z)<tolerance?'Verbinding vrijwel op evenwichtslengte':s.z>0?'Verbinding langer dan in statisch evenwicht':'Verbinding korter dan in statisch evenwicht';
+}
+function notify(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,4200);}
+function readParams(){const p={};for(const k of Object.keys(M.defaults)){const el=$(k);p[k]=k==='profile'?el.value:(el.value.trim()===''?NaN:Number(el.value));}return M.validate(p);}
+function fillParams(input){const p=M.validate(input);for(const k of Object.keys(M.defaults))$(k).value=p[k];for(const k of ['depth','speed','damping'])$(k+'Range').value=p[k];syncInputFields();}
+function syncInputFields(){
+ const profile=$('profile').value,periodic=profile==='periodic';
+ $('repeatFields').hidden=profile!=='repeat';$('periodicFields').hidden=!periodic;
+ for(const id of ['pulseCount','intervalMs'])$(id).disabled=profile!=='repeat';
+ for(const id of ['frequency','cycles'])$(id).disabled=!periodic;
+ for(const id of ['speed','length']){$(id).closest('.field').hidden=periodic;$(id).disabled=periodic;}
+ $('speedRange').disabled=periodic;
+ if(lastProfile!==profile){lastProfile=profile;refreshSweepKeys(profile);const e=$('sweepEmpty');e.querySelector('h3').textContent=profile==='repeat'?'Welke pulsafstand geeft de grootste reactie?':profile==='periodic'?'Hoe verandert de reactie met de invoerfrequentie?':'Hoe verandert de reactie met de passagesnelheid?';e.querySelector('p').textContent='Kies een parameter, een bereik en het aantal proeven. Alle andere instellingen blijven vast binnen de reeks.';}
+ try{const p=readParams(),ch=M.characteristics(p);$('inputSummary').textContent=profile==='periodic'?`${ch.count} perioden · invoer ${fmt(ch.excitationEnd-ch.t0,3)} s · f/fₙ = ${fmt(p.frequency/ch.fn,2)}`:`Pulsduur ${fmt(ch.T*1000,2)} ms · ${ch.count} puls${ch.count===1?'':'en'} · geen reset tussen pulsen.`;}catch(e){$('inputSummary').textContent='Controleer de pulsduur en de start-tot-starttijd.';}
+}
+function refreshSweepKeys(profile){
+ const key=$('sweepKey').value,keys=M.sweepKeys(profile);
+ $('sweepKey').innerHTML=keys.map(k=>`<option value="${k}">${M.labels[k]} (${M.units[k]})</option>`).join('');
+ $('sweepKey').value=profile==='repeat'?'intervalMs':profile==='periodic'?'frequency':'speed';setSweepRange();
+}
+function setSweepRange(){
+ const key=$('sweepKey').value;
+ const presets={mass:[2,25],stiffness:[50000,600000],damping:[0,.3],depth:[.2,2],length:[.05,.2],speed:[20,100],intervalMs:[20,100],pulseCount:[1,15],frequency:[5,60],cycles:[1,20]};
+ let [a,b]=presets[key]??[0,1];
+ if(key==='intervalMs'){const t=Number($('length').value)/(Number($('speed').value)/3.6)*1000;if(Number.isFinite(t)){a=Math.max(20,Math.ceil(t*1.05));b=Math.max(100,a*3);}}
+ $('sweepMin').value=a;$('sweepMax').value=b;$('sweepCount').value=['pulseCount','cycles'].includes(key)?Math.min(15,b-a+1):25;
+ const unit=M.units[key];$('sweepHelp').textContent=`Alleen ${M.labels[key].toLowerCase()} verandert (${unit}). Alle andere instellingen blijven vast; het observatievenster is gelijk voor elke proef.${['mass','stiffness'].includes(key)?' Bij vaste ζ wordt c = 2ζ√(km) opnieuw berekend.':''}`;
+}
+function setPlaying(on){running=on;prevStamp=null;holdUntil=0;syncPlay();dirty=true;}
+function syncPlay(){$('playText').textContent=running?'Pauzeren':'Afspelen';$('play').querySelector('.play-icon').textContent=running?'Ⅱ':'▶';$('play').setAttribute('aria-label',running?'Animatie pauzeren':'Animatie afspelen');}
+function setTime(t){time=clamp(t,0,end);dirty=true;renderFrame();}
+function updateScales(){const models=[result,...reference?[reference]:[]];let peak=.0006;for(const r of models){peak=Math.max(peak,r.xmax,r.p.depth/1000,r.zmax*1.15);}scale=52/peak*Number($('zoomMotion').value);forceScale=Math.max(1,...models.map(r=>r.rmax));$('scaleText').textContent=`Beweging uitvergroot · 1 mm = ${fmt(scale/1000,1)} teken-eenheden. Krachtpijl: 65 eenheden = ${fmt(forceScale,1)} N.`;}
+function scenarioDesc(p){return `${M.profiles[p.profile]} · d ${fmt(p.depth,2)} mm · ζ ${fmt(p.damping,2)} · ${p.profile==='periodic'?`${fmt(p.frequency,2)} Hz, ${p.cycles} perioden`:`v ${fmt(p.speed,1)} km/u`}${p.profile==='repeat'?` · ${p.pulseCount} pulsen / ${fmt(p.intervalMs,2)} ms`:''}`;}
+function sameInput(a,b){return a.p.profile===b.p.profile&&a.T===b.T&&a.count===b.count&&a.interval===b.interval&&a.p.depth===b.p.depth;}
+function allParamsText(p){return `${scenarioDesc(p)} · m ${fmt(p.mass,2)} kg · k ${fmt(p.stiffness,0)} N/m${p.profile==='periodic'?'':` · ℓ ${fmt(p.length,3)} m`}`;}
+
+function difference(a,b,unit,digits=1){if(Math.abs(b)<1e-12)return `Referentie: ${fmt(b,digits)} ${unit}`;const pc=100*(a/b-1);return `${pc>=0?'+':''}${fmt(pc,1)}% t.o.v. referentie (${fmt(b,digits)} ${unit})`;}
+function compute(p=null, autoplay=true, windowEnd=null){
+ clearTimeout(debounce);
+ const previousReference=reference?{...reference.p}:null;
+ try{
+  p=M.validate(p ?? readParams());const all=[p,...referenceParams?[referenceParams]:[]],chs=all.map(M.characteristics);
+  const minimumEnd=M.sharedEnd(all),sharedEnd=windowEnd===null?minimumEnd:Math.max(windowEnd,minimumEnd);
+  const next=M.solve(p,{end:sharedEnd}),nextRef=referenceParams?M.solve(referenceParams,{end:sharedEnd}):null;
+  params={...p};result=next;reference=nextRef;end=sharedEnd;
+  $('stageGrid').classList.toggle('compare',!!reference);$('refPanel').hidden=!reference;$('guide').hidden=!!reference;
+  $('unpin').hidden=!reference;$('pin').textContent=reference?'↻ Referentie vervangen':'＋ Referentie vastzetten';
+  $('currentLabel').textContent=reference?'Jouw gewijzigde scenario':'Jouw scenario';$('currentInfo').textContent=scenarioDesc(p);if(reference)$('refInfo').textContent=scenarioDesc(reference.p);
+  $('timeline').max=end;$('timeline').step=Math.max(1e-6,end/100000);$('endLabel').textContent=fmt(end,3)+' s';
+  $('pulseLabel').textContent=`Invoer: ${fmt(result.t0,3)}–${fmt(result.excitationEnd,3)} s`;
+  $('fn').textContent=fmt(result.fn,2)+' Hz';$('zmax').textContent=fmt(result.zmax*1000,3)+' mm';$('rmax').textContent=fmt(result.rmax,1)+' N';
+  $('fnDelta').textContent=reference?difference(result.fn,reference.fn,'Hz',2):'Berekend uit m en k';
+  $('zDelta').textContent=reference?difference(result.zmax*1000,reference.zmax*1000,'mm',3):'Piek in dit tijdvenster';
+  $('rDelta').textContent=reference?difference(result.rmax,reference.rmax,'N',1):'Geen breuk- of veiligheidsgrens';
+  $('compareNote').hidden=!reference;if(reference)$('compareNote').textContent=`Referentie: ${scenarioDesc(reference.p)} · m ${fmt(reference.p.mass,1)} kg · k ${fmt(reference.p.stiffness,0)} N/m · ℓ ${fmt(reference.p.length,3)} m. De vergelijking gebruikt hetzelfde tijdvenster en dezelfde bewegings- en krachtschaal.`;
+  $('status').classList.remove('error');$('status').textContent=`Berekend: ${result.t.length.toLocaleString('nl-NL')} tijdmonsters · ${result.count} ${p.profile==='periodic'?'perioden':'pulsen'}.`;
+  if(checkWorker){checkWorker.terminate();checkWorker=null;}checkToken++;$('runCheck').disabled=false;$('checkStatus').textContent='Nog niet uitgevoerd voor dit scenario.';
+  if(windowEnd===null&&sweep&&sweep.selected!==null){sweep.selected=null;updateSweepUI();}
+  syncInputFields();updateScales();buildPlot();buildInputPlot();time=0;setPlaying(autoplay);renderFrame();return true;
+ }catch(error){referenceParams=previousReference;$('status').textContent=error.message+' De animatie toont nog het laatst berekende scenario.';$('status').classList.add('error');setPlaying(false);return false;}
+}
+function renderFrame(){if(!result)return;const s=M.sample(result,time);updateScene('cur',result,s);if(reference)updateScene('ref',reference,M.sample(reference,time));
+ $('timeline').value=time;$('timecode').textContent=`t = ${fmt(time,3)} s`;
+ if(result.p.depth===0){$('phase').textContent='Geen invoer';$('insightText').textContent='De invoeramplitude is nul. Het systeem blijft in rust.';}
+ else if(time<result.t0){$('phase').textContent='Voor de invoer';$('insightText').textContent='Alleen aan het begin van deze proef is het systeem in rust. Start de animatie.';}
+ else if(time<=result.excitationEnd){
+   const event=result.events.find(e=>time>=e.start&&time<=e.end);
+   if(event){$('phase').textContent=`${result.p.profile==='periodic'?'Periode':'Puls'} ${event.index} / ${result.count}`;$('insightText').textContent=event.index===1?'De eerste invoerbeweging zet het systeem in beweging.':`De ${event.index}e invoer start vanuit de bestaande beweging. Positie en snelheid worden niet teruggezet.`;}
+   else {const past=result.events.filter(e=>e.end<time).length;$('phase').textContent=`Tussen ${past} en ${past+1}`;$('insightText').textContent='De basis staat nu stil, maar de massa kan nog bewegen. Deze toestand blijft bewaard voor de volgende puls.';}
+ }
+ else{$('phase').textContent='Na de invoer';$('insightText').textContent=result.p.damping===0?'Alle invoer is voorbij. Zonder demping blijft het model vrij trillen; de volgende afspeelronde is géén nieuwe fysieke puls.':'Alle invoer is voorbij. De overgebleven beweging dempt uit. Opnieuw afspelen herstart alleen de weergave.';}
+ updateCursor(s);updateInputCursor();dirty=false;
+}
+
+function loopFrame(stamp){if(document.hidden){prevStamp=null;requestAnimationFrame(loopFrame);return;}if(running&&result){if(prevStamp===null)prevStamp=stamp;const dt=Math.min((stamp-prevStamp)/1000,.1);prevStamp=stamp;
+ if(holdUntil){if(stamp>=holdUntil){time=0;holdUntil=0;}dirty=true;}
+ else{time=Math.min(end,time+dt*Number($('playSpeed').value));dirty=true;if(time>=end){if($('loop').checked)holdUntil=stamp+700;else setPlaying(false);}}
+ }if(dirty)renderFrame();requestAnimationFrame(loopFrame);}
+function values(r,field){return r[field];}
+function pathFor(r,field,factor,X,Y){const ts=r.t,vs=values(r,field),limit=ts.findIndex(t=>t>plotMax),last=limit<0?ts.length-1:Math.max(1,limit);const stride=Math.max(1,Math.floor(last/6000));let d='';for(let i=0;i<=last;i+=stride)d+=(d?'L':'M')+X(ts[i]).toFixed(2)+' '+Y(vs[i]*factor).toFixed(2);if(last%stride!==0)d+='L'+X(ts[last]).toFixed(2)+' '+Y(vs[last]*factor).toFixed(2);return d;}
+function getPlotSeries(){
+ const a=[];if(mode==='motion'){a.push({r:result,field:'y',f:1000,label:'y(t) · basis',dash:'7 5',opacity:.65},{r:result,field:'x',f:1000,label:'x(t) · massa',dash:'',opacity:1});if(reference){a.push({r:reference,field:'x',f:1000,label:'x(t) · referentie',dash:'2 4',opacity:.65});if(!sameInput(reference,result))a.push({r:reference,field:'y',f:1000,label:'y(t) · referentie',dash:'10 3 2 3',opacity:.35});}}
+ else if(mode==='relative'){a.push({r:result,field:'z',f:1000,label:'z(t) · jouw scenario',dash:'',opacity:1});if(reference)a.push({r:reference,field:'z',f:1000,label:'z(t) · referentie',dash:'7 5',opacity:.55});}
+ else{a.push({r:result,field:'reaction',f:1,label:'ΔR(t) · totaal',dash:'',opacity:1});if(reference)a.push({r:reference,field:'reaction',f:1,label:'ΔR(t) · referentie',dash:'10 5',opacity:.55});if($('components').checked)a.push({r:result,field:'spring',f:1,label:'Veer · kz',dash:'5 4',opacity:.7},{r:result,field:'damper',f:1,label:'Demper · cż',dash:'2 3',opacity:.55});}
+ return a;
+}
+function buildPlot(){if(!result)return;plotSeries=getPlotSeries();const W=900,H=235,L=62,R=18,top=16,bottom=37;
+ plotMax=$('chartZoom').value==='pulse'?Math.min(end,Math.max(result.excitationEnd,reference?reference.excitationEnd:0)+2/Math.min(result.fn,reference?reference.fn:result.fn)):end;
+ plotLo=0;plotHi=0;for(const s of plotSeries){const ts=s.r.t,vs=values(s.r,s.field);for(let i=0;i<ts.length&&ts[i]<=plotMax;i++){plotLo=Math.min(plotLo,vs[i]*s.f);plotHi=Math.max(plotHi,vs[i]*s.f);}}
+ if(plotHi-plotLo<1e-12){plotLo=-1;plotHi=1;}else{const pad=(plotHi-plotLo)*.14;plotLo-=pad;plotHi+=pad;}
+ const X=t=>L+t/plotMax*(W-L-R),Y=v=>top+(plotHi-v)/(plotHi-plotLo)*(H-top-bottom);
+ const tick=v=>Number(v.toPrecision(3)).toLocaleString('nl-NL',{maximumFractionDigits:6});
+ let content=`<defs><clipPath id="plotClip"><rect x="${L}" y="${top}" width="${W-L-R}" height="${H-top-bottom}"/></clipPath></defs>`;
+ for(const e of result.events)content+=`<rect x="${X(e.start)}" y="${top}" width="${X(e.end)-X(e.start)}" height="${H-top-bottom}" fill="currentColor" opacity=".045"/>`;
+ for(let i=0;i<=4;i++){const v=plotLo+(plotHi-plotLo)*i/4,py=Y(v);content+=`<line x1="${L}" x2="${W-R}" y1="${py}" y2="${py}" stroke="currentColor" opacity=".1"/><text x="${L-10}" y="${py+4}" text-anchor="end" font-size="11">${tick(v)}</text>`;}
+ for(let i=0;i<=5;i++){const t=plotMax*i/5,px=X(t);content+=`<line x1="${px}" x2="${px}" y1="${top}" y2="${H-bottom}" stroke="currentColor" opacity=".055"/><text x="${px}" y="${H-bottom+22}" text-anchor="middle" font-size="11">${tick(t)}</text>`;}
+ content+=`<text x="${W-R}" y="${H-2}" text-anchor="end" font-size="10">Tijd (s)</text><g clip-path="url(#plotClip)">`;
+ for(const s of plotSeries)content+=`<path d="${pathFor(s.r,s.field,s.f,X,Y)}" fill="none" stroke="currentColor" stroke-width="${s.dash?1.5:2}" opacity="${s.opacity}" stroke-dasharray="${s.dash}"/>`;
+ content+='</g><g id="plotCursor">';content+=`<line id="cursorLine" x1="${L}" x2="${L}" y1="${top}" y2="${H-bottom}" stroke="currentColor" stroke-width="1" opacity=".45"/>`;
+ plotSeries.forEach((s,i)=>content+=`<circle id="dot${i}" cx="${L}" cy="${Y(0)}" r="3" stroke="currentColor" fill="white" stroke-width="1.5"/>`);content+='</g>';
+ $('plot').innerHTML=content;$('legend').innerHTML=plotSeries.map(s=>`<span><i class="${s.dash?(s.dash==='2 4'?'dots':'dash'):''}"></i>${s.label}</span>`).join('');
+ $('plotUnit').textContent=mode==='force'?'Reactiekracht · N':'Verplaatsing · mm';$('componentsWrap').hidden=mode!=='force';
+ $('plot').setAttribute('aria-label',mode==='force'?'Berekende reactiekracht en gesynchroniseerde tijdcursor':'Berekende verplaatsing en gesynchroniseerde tijdcursor');dirty=true;
+}
+function updateCursor(sample){if(!$('plotCursor'))return;const cursor=$('plotCursor');if(time>plotMax){cursor.style.display='none';return;}cursor.style.display='';const X=t=>62+t/plotMax*(900-62-18),Y=v=>16+(plotHi-v)/(plotHi-plotLo)*(235-16-37);
+ const xx=X(time);$('cursorLine').setAttribute('x1',xx);$('cursorLine').setAttribute('x2',xx);
+ for(let i=0;i<plotSeries.length;i++){const s=plotSeries[i],sv=s.r===result?sample:M.sample(reference,time),v=sv[s.field]*s.f;$('dot'+i).setAttribute('cx',xx);$('dot'+i).setAttribute('cy',Y(v));}
+}
+function onChange(){syncInputFields();setPlaying(false);$('status').classList.remove('error');$('status').textContent='Parameter gewijzigd. Berekening bijwerken…';clearTimeout(debounce);if($('auto').checked)debounce=setTimeout(()=>compute(null,true),160);else $('status').textContent='Klik op Simulatie starten om de nieuwe waarden te berekenen.';}
+for(const key of Object.keys(M.defaults))$(key).addEventListener('input',()=>{if($(key+'Range'))$(key+'Range').value=$(key).value;onChange();});
+for(const key of ['depth','speed','damping'])$(key+'Range').addEventListener('input',()=>{$(key).value=$(key+'Range').value;onChange();});
+$('controls').addEventListener('submit',e=>{e.preventDefault();if($('controls').reportValidity())compute(null,true);});
+$('auto').addEventListener('change',()=>{if($('auto').checked)compute(null,true);});
+$('play').addEventListener('click',()=>{if(!running&&time>=end)time=0;setPlaying(!running);});
+$('gotoParams').addEventListener('click',()=>$('parameters').scrollIntoView({behavior:'smooth',block:'start'}));
+$('backToStage').addEventListener('click',()=>$('stage').scrollIntoView({behavior:'smooth',block:'start'}));
+$('restart').addEventListener('click',()=>{setTime(0);holdUntil=0;prevStamp=null;});
+$('peak').addEventListener('click',()=>{setPlaying(false);setTime(result.peakTime);});
+$('timeline').addEventListener('input',()=>{setPlaying(false);setTime(Number($('timeline').value));});
+$('playSpeed').addEventListener('change',()=>{prevStamp=null;});
+$('zoomMotion').addEventListener('change',()=>{updateScales();dirty=true;renderFrame();});
+$('chartZoom').addEventListener('change',()=>{buildPlot();renderFrame();});
+$('components').addEventListener('change',()=>{buildPlot();renderFrame();});
+for(const tab of document.querySelectorAll('[data-mode]'))tab.addEventListener('click',()=>{mode=tab.dataset.mode;for(const t of document.querySelectorAll('[data-mode]'))t.setAttribute('aria-selected',String(t===tab));buildPlot();renderFrame();});
+$('pin').addEventListener('click',()=>{referenceParams={...result.p};compute(result.p,false);notify('Referentie vastgezet. Verander nu één parameter.');});
+$('unpin').addEventListener('click',()=>{referenceParams=null;compute(result.p,false);});
+$('reset').addEventListener('click',()=>{referenceParams=null;fillParams(M.defaults);compute(M.defaults,true);notify('Startwaarden hersteld; vergelijking gewist.');});
+function experiment(change){try{const p=readParams();const next=change({...p});M.validate(next);if(!referenceParams)referenceParams={...result.p};fillParams(next);compute(next,true);}catch(err){notify(err.message);}}
+$('experimentDouble').addEventListener('click',()=>experiment(p=>({...p,depth:p.depth*2})));
+$('experimentUndamped').addEventListener('click',()=>experiment(p=>({...p,damping:0})));
+$('experimentRepeat').addEventListener('click',()=>{try{const p=readParams();referenceParams={...p,profile:'single'};const next={...p,profile:'repeat',pulseCount:5,intervalMs:Math.max(45,p.length/(p.speed/3.6)*1100)};fillParams(next);compute(next,true);notify('Vijf pulsen vergeleken met één puls, met dezelfde pulsbreedte en amplitude.');}catch(e){notify(e.message);}});
+$('experimentPeriodic').addEventListener('click',()=>{const p={...result.p,profile:'periodic'};referenceParams=null;fillParams(p);compute(p,true);notify('Periodieke invoer gekozen. Onderzoek nu de invoerfrequentie.');});
+let dragging=false;function chartSeek(e){const rect=$('plot').getBoundingClientRect(),px=(e.clientX-rect.left)/rect.width*900;setPlaying(false);setTime((px-62)/(900-62-18)*plotMax);}
+$('plot').addEventListener('pointerdown',e=>{if(e.button!==0)return;dragging=true;$('plot').setPointerCapture(e.pointerId);chartSeek(e);});
+$('plot').addEventListener('pointermove',e=>{if(dragging)chartSeek(e);});
+$('plot').addEventListener('pointerup',()=>{dragging=false;});$('plot').addEventListener('pointercancel',()=>{dragging=false;});
+function scenarioFile(){return {format:'gvb-visueel-scenario',version:3,status:'SYNTHETISCH; geen fysieke validatie',parameters:{...result.p},reference:referenceParams?{...referenceParams}:null,observationEnd:result.end,units:{...M.units}};}
+function download(name,text,type){const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
+$('saveScenario').addEventListener('click',()=>download('gvb_scenario_v3.json',JSON.stringify(scenarioFile(),null,2),'application/json'));
+$('loadScenario').addEventListener('click',()=>$('importFile').click());
+function load(data){if(!data||data.format!=='gvb-visueel-scenario'||![2,3].includes(data.version))throw new Error('Kies een scenariobestand van simulator v2 of v3.');const p=M.validate(data.parameters),ref=data.reference?M.validate(data.reference):null;referenceParams=ref;fillParams(p);if(!compute(p,false,data.version===3?validatedEnd(data.observationEnd):null))throw new Error('Dit scenario kan niet worden berekend.');notify('Scenario geladen. Klik op Afspelen.');}
+$('importFile').addEventListener('change',async()=>{const f=$('importFile').files[0];if(!f)return;try{if(f.size>20000)throw new Error('Scenariobestand te groot.');load(JSON.parse(await f.text()));}catch(e){notify(e.message);}finally{$('importFile').value='';}});
+$('csv').addEventListener('click',()=>{const r=result,rows=['tijd_s,x_m,y_m,z_m,x_snelheid_m_s,y_snelheid_m_s,veer_N,demper_N,dynamische_reactie_N'];for(let i=0;i<r.t.length;i++)rows.push([r.t[i],r.x[i],r.y[i],r.z[i],r.velocity[i],r.yVelocity[i],r.spring[i],r.damper[i],r.reaction[i]].join(','));download('gvb_resultaten_synthetisch.csv',rows.join('\n'),'text/csv;charset=utf-8');notify('CSV bevat jouw berekende scenario; SI-eenheden, punt als decimaalteken.');});
+$('share').addEventListener('click',async()=>{if(!/^https?:$/.test(location.protocol)){download('gvb_scenario_v3.json',JSON.stringify(scenarioFile(),null,2),'application/json');notify('Lokaal bestand: deel het scenario-JSON samen met deze HTML. Een web-link werkt na hosting.');return;}const link=location.origin+location.pathname+'#scenario='+encodeURIComponent(JSON.stringify(scenarioFile()));try{await navigator.clipboard.writeText(link);notify('Scenariolink gekopieerd. De waarden staan alleen in de URL.');}catch(e){window.prompt('Kopieer deze scenariolink:',link);}});
+document.addEventListener('visibilitychange',()=>{prevStamp=null;});
+function validatedEnd(value){if(value==null)return null;if(typeof value!=='number'||!Number.isFinite(value)||value<=0||value>120)throw new Error('Ongeldig opgeslagen tijdvenster.');return value;}
+function buildInputPlot(){
+ if(!result)return;const W=900,H=84,L=20,R=20,top=10,bottom=20,depth=Math.max(.0001,result.p.depth/1000);
+ const X=t=>L+t/end*(W-L-R),Y=y=>top-y/depth*36;
+ let content=`<line x1="${L}" y1="${top}" x2="${W-R}" y2="${top}" stroke="currentColor" opacity=".15"/>`,path='';
+ // Bemonster elk event afzonderlijk: ook zeer smalle pulsen blijven zichtbaar.
+ const times=[0];for(const e of result.events){for(let j=0;j<=50;j++)times.push(e.start+(e.end-e.start)*j/50);}times.push(end);
+ for(let i=0;i<times.length;i++){const t=times[i];path+=`${i?'L':'M'}${X(t).toFixed(2)} ${Y(M.base(t,result.p,result)[0]).toFixed(2)} `;}
+ content+=`<path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6"/>`;
+ for(const e of result.events)if(result.count<=12)content+=`<text x="${X((e.start+e.end)/2)}" y="${H-13}" text-anchor="middle">${e.index}</text>`;
+ content+=`<line id="inputCursor" x1="${L}" x2="${L}" y1="4" y2="${H-7}" stroke="currentColor" stroke-dasharray="2 3" opacity=".5"/><text x="${W-R}" y="${H-1}" text-anchor="end">${fmt(end,3)} s</text>`;
+ $('inputPlot').innerHTML=content;$('profileCaption').textContent=`${M.profiles[result.p.profile]} · ${result.count} ${result.p.profile==='periodic'?'perioden':'pulsen'}`;
+}
+function updateInputCursor(){if($('inputCursor')){const x=20+time/end*860;$('inputCursor').setAttribute('x1',x);$('inputCursor').setAttribute('x2',x);}}
+function newWorker(){const url=URL.createObjectURL(new Blob([$('workerCode').textContent],{type:'text/javascript'}));try{const w=new Worker(url);setTimeout(()=>URL.revokeObjectURL(url),1000);return w;}catch(e){URL.revokeObjectURL(url);throw e;}}
+function cancelSweep(){sweepToken++;if(sweepWorker){sweepWorker.terminate();sweepWorker=null;}sweepBusy=false;$('sweepStart').disabled=false;$('sweepCancel').hidden=true;if(sweep){sweep.state='cancelled';$('sweepStatus').textContent=`Gestopt. ${sweep.rows.length} berekende proeven blijven beschikbaar.`;}}
+function updateSweepUI(){
+ if(!sweep)return;const {plan,rows}=sweep;
+ $('sweepEmpty').hidden=rows.length>0;$('sweepResults').hidden=!rows.length;
+ $('sweepSnapshot').textContent=`${allParamsText(plan.baseline)}. Gevarieerd: ${plan.label} (${plan.units}). Vast venster 0–${fmt(plan.end,4)} s.`;
+ $('sweepProgress').value=rows.length;$('sweepProgress').max=plan.count;
+ $('sweepColName').textContent=`${plan.label} (${plan.units})`;
+ $('sweepRows').innerHTML=rows.map((r,i)=>`<tr${i===sweep.selected?' class="selected"':''}><td>${i+1}</td><td>${fmt(r.value,3)}</td><td>${fmt(r.rmax,2)}</td><td>${fmt(r.zmax*1000,4)}</td><td><button data-trial="${i}" aria-label="Proef ${i+1} afspelen">Afspelen</button></td></tr>`).join('');
+ $('sweepRows').querySelectorAll('[data-trial]').forEach(b=>b.addEventListener('click',()=>selectTrial(Number(b.dataset.trial))));
+ buildSweepPlot();
+}
+function sweepMetric(){return $('sweepMetric').value==='zmax'?{key:'zmax',factor:1000,unit:'mm',label:'Maximum |z|'}:{key:'rmax',factor:1,unit:'N',label:'Maximum |ΔR|'};}
+function buildSweepPlot(){
+ if(!sweep||!sweep.rows.length)return;const {plan,rows,selected}=sweep,met=sweepMetric(),W=900,H=290,L=68,R=22,top=20,bottom=55;
+ const peak=Math.max(...rows.map(r=>r[met.key]*met.factor)),hi=Math.max(1e-6,peak*1.15),X=v=>L+(v-plan.min)/(plan.max-plan.min)*(W-L-R),Y=v=>top+(hi-v)/hi*(H-top-bottom);
+ let out='';for(let i=0;i<=4;i++){const v=hi*i/4,y=Y(v);out+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="currentColor" opacity=".10"/><text x="${L-10}" y="${y+4}" font-size="11" text-anchor="end">${fmt(v,v<.1?3:1)}</text>`;}
+ for(let i=0;i<=5;i++){const v=plan.min+(plan.max-plan.min)*i/5;out+=`<text x="${X(v)}" y="${H-bottom+22}" font-size="11" text-anchor="middle">${fmt(v,v<1?2:1)}</text>`;}
+ out+=`<text x="${L}" y="11" font-size="10">${met.label} (${met.unit})</text><text x="${W-R}" y="${H-7}" font-size="11" text-anchor="end">${plan.label} (${plan.units})</text>`;
+ // Een lijn is een visuele gids tussen proeven, geen extra berekende data.
+ out+=`<path d="${rows.map((r,i)=>`${i?'L':'M'}${X(r.value)} ${Y(r[met.key]*met.factor)}`).join(' ')}" stroke="currentColor" fill="none" opacity=".5" stroke-width="1.5"/>`;
+ rows.forEach((r,i)=>{const x=X(r.value),y=Y(r[met.key]*met.factor);out+=`<g class="trial-point" data-index="${i}" role="button" tabindex="0" aria-label="Proef ${i+1}: ${plan.label} ${fmt(r.value,3)} ${plan.units}, ${met.label} ${fmt(r[met.key]*met.factor,3)} ${met.unit}. Afspelen."><circle cx="${x}" cy="${y}" r="12" fill="transparent"/><circle class="point-outline" cx="${x}" cy="${y}" r="${i===selected?6:4}" fill="${i===selected?'#135f60':'white'}" stroke="currentColor" stroke-width="1.7"/><title>Proef ${i+1} · ${fmt(r.value,3)} ${plan.units} → ${fmt(r[met.key]*met.factor,3)} ${met.unit}</title></g>`;});
+ $('sweepPlot').innerHTML=out;
+ $('sweepPlot').querySelectorAll('[data-index]').forEach(el=>{const fn=()=>selectTrial(Number(el.dataset.index));el.addEventListener('click',fn);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fn();}});});
+ let maxrow=rows.reduce((a,b)=>a[met.key]>=b[met.key]?a:b);
+ $('sweepInsight').textContent=peak<1e-10?'Alle berekende reacties zijn nul. Controleer of je een niet-nulle invoeramplitude hebt gekozen.':`Grootste getoonde piek: ${fmt(maxrow[met.key]*met.factor,3)} ${met.unit}, bij ${plan.label.toLowerCase()} = ${fmt(maxrow.value,3)} ${plan.units}. Dit geldt voor ${rows.length} berekende proeven, niet voor alle mogelijke waarden.`;
+ $('selectedTrial').hidden=selected==null;
+ if(selected!=null){const r=rows[selected];$('selectedTrial').textContent=`Gekozen: proef ${selected+1} · ${fmt(r.value,3)} ${plan.units}. De animatie hierboven vergelijkt deze proef met de vaste basis van deze reeks.`;}
+}
+function selectTrial(index,scroll=true){
+ if(!sweep||!Number.isInteger(index)||!sweep.rows[index])return false;
+ const r=sweep.rows[index];referenceParams={...sweep.plan.baseline};fillParams(r.parameters);
+ if(!compute(r.parameters,true,sweep.plan.end))return false;
+ sweep.selected=index;updateSweepUI();
+ if(scroll)$('stage').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ notify(`Proef ${index+1} geladen. De referentie is de vaste basis van het onderzoek.`);return true;
+}
+async function startSweep(){
+ let p,plan;try{p=readParams();plan=M.makeSweep(p,$('sweepKey').value,Number($('sweepMin').value),Number($('sweepMax').value),Number($('sweepCount').value));}catch(e){$('sweepStatus').textContent=e.message;$('sweepStatus').classList.add('error');return false;}
+ if(sweepWorker)sweepWorker.terminate();const token=++sweepToken;sweepBusy=true;sweep={plan,rows:[],selected:null,state:'running'};
+ $('sweepStart').disabled=true;$('sweepCancel').hidden=false;$('sweepProgress').hidden=false;$('sweepProgress').value=0;$('sweepProgress').max=plan.count;
+ $('sweepStatus').classList.remove('error');$('sweepStatus').textContent=`0 / ${plan.count} proeven · één doorlopende berekening per proef.`;$('sweepResults').hidden=true;$('sweepEmpty').hidden=false;
+ const receive=data=>{
+  if(token!==sweepToken)return;
+  if(data.kind==='row'){sweep.rows.push(data.row);$('sweepStatus').textContent=`${data.completed} / ${data.total} proeven berekend`;updateSweepUI();}
+  if(data.kind==='done'||data.kind==='error'){
+   sweepBusy=false;$('sweepStart').disabled=false;$('sweepCancel').hidden=true;
+   if(sweepWorker){sweepWorker.terminate();sweepWorker=null;}
+   sweep.state=data.kind==='done'?'complete':'error';
+   $('sweepStatus').textContent=data.kind==='done'?`${plan.count} proeven klaar. Klik op een punt om de bijbehorende beweging te zien.`:data.message;
+   $('sweepStatus').classList.toggle('error',data.kind==='error');updateSweepUI();
+  }
+ };
+ const fallback=async()=>{
+  if(token!==sweepToken)return;
+  sweep.rows=[];sweep.state='running';
+  $('sweepStatus').textContent='Rekenen per proef zonder worker; stoppen is mogelijk tussen proeven.';
+  for(let i=0;i<plan.count;i++){
+   await new Promise(resolve=>setTimeout(resolve,16));if(token!==sweepToken)return;
+   try{const r=M.solve(plan.scenarios[i],{end:plan.end,summaryOnly:true});receive({kind:'row',row:{...M.summary(r),index:i,value:plan.values[i]},completed:i+1,total:plan.count});}catch(e){receive({kind:'error',message:e.message});return;}
+  }receive({kind:'done'});
+ };
+ try{sweepWorker=newWorker();sweepWorker.onmessage=e=>receive(e.data);sweepWorker.onerror=e=>{e.preventDefault();if(sweepWorker){sweepWorker.terminate();sweepWorker=null;}fallback();};sweepWorker.postMessage({kind:'sweep',parameters:p,key:plan.key,min:plan.min,max:plan.max,count:plan.count});}catch(e){fallback();}
+ return true;
+}
+$('sweepForm').addEventListener('submit',e=>{e.preventDefault();if($('sweepForm').reportValidity())startSweep();});
+$('sweepKey').addEventListener('change',setSweepRange);$('sweepMetric').addEventListener('change',()=>buildSweepPlot());$('sweepCancel').addEventListener('click',cancelSweep);
+$('sweepCSV').addEventListener('click',()=>{if(!sweep)return;const fields=Object.keys(M.defaults),rows=[['proef',...fields,'max_reactie_N','max_relatief_m','piek_tijd_s','eind_tijd_s','tijdmonsters'].join(',')];for(const r of sweep.rows)rows.push([r.index+1,...fields.map(k=>r.parameters[k]),r.rmax,r.zmax,r.peakTime,r.end,r.samples].join(','));download('gvb_parameteronderzoek_v3.csv',rows.join('\n'),'text/csv;charset=utf-8');});
+$('sweepJSON').addEventListener('click',()=>{if(sweep)download('gvb_parameteronderzoek_v3.json',JSON.stringify({format:'gvb-parameteronderzoek',version:3,status:'Synthetisch; geen fysieke validatie',units:M.units,plan:sweep.plan,state:sweep.state,rows:sweep.rows},null,2),'application/json');});
+$('runCheck').addEventListener('click',()=>{
+ const p={...result.p},token=++checkToken;$('runCheck').disabled=true;$('checkStatus').textContent='Nul-invoer, lineariteit en tijdstapverfijning worden gecontroleerd…';
+ const finish=data=>{if(token!==checkToken)return;$('runCheck').disabled=false;if(checkWorker){checkWorker.terminate();checkWorker=null;}if(data.kind==='error'){$('checkStatus').textContent='Controle niet voltooid: '+data.message;return;}const r=data.result;$('checkStatus').textContent=`${r.passed?'Rekencontroles geslaagd':'Controle vraagt aandacht'} · piekkracht verandert ${fmt(100*r.errors.force,4)}% bij een fijnere tijdstap; max. |z| verandert ${fmt(100*r.errors.motion,4)}%. Nul-invoer ${r.errors.zero<1e-10?'geslaagd':'afwijkend'}; lineariteit ${r.errors.linearity<1e-8?'geslaagd':'afwijkend'}. Geen fysieke validatie.`;};
+ const fallback=()=>setTimeout(()=>{try{finish({result:M.numericalCheck(p)});}catch(e){finish({kind:'error',message:e.message});}},16);
+ try{checkWorker=newWorker();checkWorker.onmessage=e=>finish(e.data);checkWorker.onerror=e=>{e.preventDefault();fallback();};checkWorker.postMessage({kind:'check',parameters:p});}catch(e){fallback();}
+});
+window.GVBApp={startSweep,cancelSweep,selectTrial,getSweep:()=>sweep,getState:()=>({time,running,params:{...params},referenceParams:referenceParams?{...referenceParams}:null,end,scale,forceScale,mode,result,reference}),seek:t=>{setPlaying(false);setTime(t);},setParameters:p=>{fillParams(p);return compute(p,false);},setReference:p=>{referenceParams=p?M.validate(p):null;return compute(result.p,false);},play:()=>setPlaying(true),pause:()=>setPlaying(false),load,exportScenario:scenarioFile};
+window.solveModel=M.solve;
+fillParams(params);compute(params,false);
+if(location.hash.startsWith('#scenario=')){try{if(location.hash.length>20000)throw new Error('Scenariolink te lang.');load(JSON.parse(decodeURIComponent(location.hash.slice(10))));}catch(e){notify('Scenariolink niet geladen: '+e.message);}}
+else if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setPlaying(true);
+requestAnimationFrame(loopFrame);
+})();
+</script>
+</body></html>

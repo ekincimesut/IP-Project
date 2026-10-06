@@ -1,0 +1,32 @@
+{
+  "format": "gvb-visueel-scenario",
+  "version": 3,
+  "status": "Synthetisch; geen fysieke validatie",
+  "parameters": {
+    "mass": 10,
+    "stiffness": 200000,
+    "damping": 0.05,
+    "depth": 1,
+    "length": 0.15,
+    "speed": 36,
+    "profile": "periodic",
+    "pulseCount": 5,
+    "intervalMs": 45,
+    "frequency": 22,
+    "cycles": 12
+  },
+  "reference": null,
+  "observationEnd": 1.0454545454545454,
+  "units": {
+    "mass": "kg",
+    "stiffness": "N/m",
+    "damping": "–",
+    "depth": "mm",
+    "length": "m",
+    "speed": "km/u",
+    "pulseCount": "pulsen",
+    "intervalMs": "ms",
+    "frequency": "Hz",
+    "cycles": "perioden"
+  }
+}

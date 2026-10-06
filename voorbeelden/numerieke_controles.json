@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "errors": {
+    "force": 0.000046935140240571716,
+    "motion": 0.00010650376531704775,
+    "linearity": 0,
+    "zero": 0
+  },
+  "end": 0.6950000000000001,
+  "note": "Numerieke controles, geen fysieke validatie of beoordeling van veiligheid."
+}

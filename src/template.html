@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Interactief studentenmodel: bekijk, vertraag en vergelijk de berekende beweging van een equivalent massa–veer–dempersysteem. Geen breukvoorspelling.">
+<title>GVB-project · Experimentenlab v3</title>
+<style>/* STYLE */</style>
+</head>
+<body>
+<div class="topbar"><div class="brand"><span class="brandmark" aria-hidden="true">∿</span>GVB · Trillingslab<span class="version">Studentenproject / v3</span></div><div class="local">Lokaal berekend · geen gegevensupload</div></div>
+<main>
+<header class="intro"><div><h1>Van één puls naar een experiment.</h1><p>Pas de invoer aan, onderzoek een reeks en speel elke berekende proef af.</p></div><a class="pill lab-jump" href="#research">Nieuw · Parameteronderzoek ↓</a></header>
+<div class="scope-note"><strong>Synthetisch scenario — geen GVB-meting.</strong> 1 vrijheidsgraad · geen lokale spanning of breukberekening. Pulsen worden achter elkaar doorgerekend; dit zijn geen getelde treinpassages.</div>
+<div class="layout">
+<aside class="card sidebar" id="parameters">
+<button class="mobile-jump" id="backToStage">↑ Terug naar animatie</button>
+<form id="controls">
+<h2>Jouw scenario</h2><p class="small muted">Alle invoer is synthetisch. Kies eerst een profiel.</p>
+<div class="field profile-field"><label for="profile">Invoerprofiel</label><select id="profile" name="profile" class="select-full"><option value="single">Enkele puls</option><option value="repeat" selected>Herhaalde pulsen</option><option value="periodic">Periodieke invoer</option></select></div>
+<div id="repeatFields" class="input-group"><div class="field"><div class="field-head"><label for="pulseCount">Aantal pulsen</label><input class="number" id="pulseCount" name="pulseCount" type="number" min="1" max="40" step="1" value="5" required></div></div><div class="field"><div class="field-head"><label for="intervalMs">Start-tot-starttijd</label><div><input class="number" id="intervalMs" name="intervalMs" type="number" min="1" max="5000" step="any" value="45" required><span class="unit">ms</span></div></div></div><p class="field-help">Van het begin van puls 1 tot het begin van puls 2. De vorige beweging blijft behouden.</p></div>
+<div id="periodicFields" class="input-group" hidden><div class="field"><div class="field-head"><label for="frequency">Invoerfrequentie</label><div><input class="number" id="frequency" name="frequency" type="number" min="0.2" max="300" step="any" value="22" required><span class="unit">Hz</span></div></div></div><div class="field"><div class="field-head"><label for="cycles">Aantal perioden</label><input class="number" id="cycles" name="cycles" type="number" min="1" max="80" step="1" value="12" required></div></div><p class="field-help">Cosinusvormige verlagingen van 0 tot −d. Frequentie en aantal perioden bepalen de duur; ℓ en v zijn hier niet actief.</p></div>
+<div class="parameters">
+<div class="field"><div class="field-head"><label for="depth">Invoeramplitude d</label><div><input class="number" id="depth" name="depth" type="number" min="0" max="20" step="any" value="1" required><span class="unit">mm</span></div></div><input class="range" id="depthRange" aria-label="Invoeramplitude wijzigen" type="range" min="0" max="20" step="0.05" value="1"><div class="ends"><span>0 mm</span><span>20 mm</span></div></div>
+<div class="field"><div class="field-head"><label for="speed">Passagesnelheid v</label><div><input class="number" id="speed" name="speed" type="number" min="1" max="160" step="any" value="36" required><span class="unit">km/u</span></div></div><input class="range" id="speedRange" aria-label="Passagesnelheid wijzigen" type="range" min="1" max="160" step="1" value="36"><div class="ends"><span>1 km/u</span><span>160 km/u</span></div></div>
+<div class="field"><div class="field-head"><label for="damping">Dempingsverhouding ζ</label><div><input class="number" id="damping" name="damping" type="number" min="0" max="1" step="any" value="0.05" required><span class="unit">–</span></div></div><input class="range" id="dampingRange" aria-label="Dempingsverhouding wijzigen" type="range" min="0" max="1" step="0.01" value="0.05"><div class="ends"><span>0 · ongedempt</span><span>1 · kritisch</span></div></div>
+</div>
+<details><summary>Massa, stijfheid en profiellengte</summary><div class="advanced">
+<div class="field"><div class="field-head"><label for="mass">Effectieve massa m</label><div><input class="number wide" id="mass" name="mass" type="number" min="0.1" max="1000" step="any" value="10" required><span class="unit">kg</span></div></div></div>
+<div class="field"><div class="field-head"><label for="stiffness">Stijfheid k</label><div><input class="number wide" id="stiffness" name="stiffness" type="number" min="100" max="10000000" step="any" value="200000" required><span class="unit">N/m</span></div></div></div>
+<div class="field"><div class="field-head"><label for="length">Profiellengte ℓ</label><div><input class="number wide" id="length" name="length" type="number" min="0.01" max="5" step="any" value="0.15" required><span class="unit">m</span></div></div></div>
+</div></details>
+<p id="inputSummary" class="field-help"></p><button class="primary full" type="submit">Scenario berekenen</button><p class="status" id="status" role="status" aria-live="polite">Scenario wordt berekend…</p>
+<label class="check"><input type="checkbox" id="auto" checked>Direct bijwerken na een wijziging</label>
+</form>
+<div class="experiments"><h3>Vergelijk met één klik</h3><div class="experiment-buttons"><button id="experimentRepeat">5 pulsen ↔ 1 puls</button><button id="experimentDouble">2× amplitude</button><button id="experimentUndamped">Zonder demping</button><button id="experimentPeriodic">Periodieke invoer</button></div><p class="field-help">Je huidige scenario wordt eerst als referentie vastgezet als er nog geen referentie is.</p><button class="reset" id="reset">Alle startwaarden herstellen</button></div>
+</aside>
+<section class="main-col" aria-label="Visuele simulatie">
+<div class="card">
+<div class="stage-top"><div><div class="kicker muted">Berekende beweging · live afgespeeld</div><h2>Jullie model, stap voor stap</h2></div><div class="actions"><button class="mobile-jump" id="gotoParams">Parameters wijzigen ↓</button><button id="pin">＋ Referentie vastzetten</button><button id="unpin" hidden>Vergelijking sluiten</button></div></div>
+<div class="stage-area" id="stage">
+<div class="stage-grid" id="stageGrid">
+<div class="scene-panel"><div class="scene-header"><span class="scene-label" id="currentLabel">Jouw scenario</span><span class="scene-info" id="currentInfo"></span></div><div class="scene" id="currentScene"></div><p class="scene-state" id="currentConnection">Verbinding in de evenwichtsstand</p></div>
+<div class="guide" id="guide">
+<div class="step"><span class="step-num">01</span><div><h3>De basis krijgt een beweging</h3><p>De onderste balk volgt het gekozen profiel y(t). Dit is de invoer, niet een berekende railvervorming.</p></div></div>
+<div class="step"><span class="step-num">02</span><div><h3>De massa reageert</h3><p>Het blok beweegt volgens de oplossing x(t). Een volgende puls begint vanuit de vorige positie en snelheid, niet vanuit rust.</p></div></div>
+<div class="step"><span class="step-num">03</span><div><h3>De verbinding verandert van lengte</h3><p>Het verschil z = x − y vervormt de veer. De krachtpijl toont de dynamische reactie op de basis.</p></div></div>
+<div class="guide-legend"><span><i style="background:#89cddd"></i>Basis</span><span><i style="background:#f3c892"></i>Massa</span><span><i style="background:#b6afd8"></i>Reactie</span></div>
+</div>
+<div class="scene-panel" id="refPanel" hidden><div class="scene-header"><span class="scene-label">Vastgezette referentie</span><span class="scene-info" id="refInfo"></span></div><div class="scene" id="referenceScene"></div><p class="scene-state" id="referenceConnection"></p></div>
+</div>
+<div class="view-options"><span id="scaleText">Beweging uitvergroot; geen geometrische schaal.</span><label for="zoomMotion">Weergave <select id="zoomMotion"><option value="1">Uitvergroot</option><option value="0.5">Minder uitvergroot</option></select></label><span>Beide scenario's gebruiken dezelfde schaal.</span></div>
+</div>
+<div class="insight"><span class="phase" id="phase">Voor de puls</span><p id="insightText">Het systeem begint in rust. Speel af om de invoer en reactie te zien.</p></div>
+<div class="transport">
+<div class="transport-row"><div class="transport-buttons"><button class="primary play" id="play" aria-label="Animatie afspelen"><span class="play-icon" aria-hidden="true">▶</span><span id="playText">Afspelen</span></button><button id="restart" title="Terug naar het begin" aria-label="Terug naar het begin">↺</button><button id="peak">Naar piekkracht</button></div><div class="speed-controls"><label for="playSpeed">Afspelen <select id="playSpeed"><option value="0.005">200× vertraagd</option><option value="0.02">50× vertraagd</option><option value="0.05" selected>20× vertraagd</option><option value="0.1">10× vertraagd</option><option value="0.2">5× vertraagd</option><option value="1">Realtime</option></select></label><label class="check"><input type="checkbox" id="loop" >Opnieuw afspelen</label></div></div>
+<div class="timeline-row"><output class="timecode" id="timecode">t = 0,000 s</output><label class="sr" for="timeline">Tijdstip in de simulatie</label><input id="timeline" class="range" type="range" min="0" max="0.515" step="0.00001" value="0"></div><div class="timeline-ticks"><span>0 s</span><span id="pulseLabel">Invoer: 0,050–0,065 s</span><span id="endLabel">0,515 s</span></div>
+</div></div>
+<div class="card input-preview"><div class="chart-head"><h3>Opgelegde invoer y(t)</h3><span id="profileCaption" class="small muted"></span></div><svg id="inputPlot" viewBox="0 0 900 84" role="img" aria-label="Gekozen invoerprofiel met tijdcursor"></svg><p class="field-help">Opnieuw afspelen spoelt alleen de animatie terug. Herhaalde pulsen zijn onderdeel van één doorlopende berekening.</p></div>
+<div class="results-strip">
+<div class="card result"><span class="small">Eigenfrequentie</span><strong id="fn">—</strong><span class="delta" id="fnDelta">Berekend uit m en k</span></div>
+<div class="card result"><span class="small">Max. relatieve uitwijking</span><strong id="zmax">—</strong><span class="delta" id="zDelta">Piek in dit tijdvenster</span></div>
+<div class="card result"><span class="small">Max. dynamische reactiekracht</span><strong id="rmax">—</strong><span class="delta" id="rDelta">Geen breuk- of veiligheidsgrens</span></div>
+</div>
+<div class="card chart-card">
+<div class="chart-head"><div class="tabs" role="tablist" aria-label="Grafiek kiezen"><button role="tab" aria-selected="true" data-mode="motion">Beweging</button><button role="tab" aria-selected="false" data-mode="relative">Relatief</button><button role="tab" aria-selected="false" data-mode="force">Kracht</button></div><label for="chartZoom"><select id="chartZoom" aria-label="Tijdvenster grafiek"><option value="all">Hele tijdvenster</option><option value="pulse">Rond de hele invoerreeks</option></select></label></div>
+<div class="legend" id="legend"></div><div id="chart" class="chart-area"><svg id="plot" viewBox="0 0 900 235" role="img" aria-label="Berekende beweging met een gesynchroniseerde tijdcursor"></svg></div><div class="chart-foot"><span>Klik in de grafiek om naar dat moment te springen.</span><span id="plotUnit">Verplaatsing · mm</span></div>
+<label class="check" id="componentsWrap" hidden style="margin:6px 0"><input id="components" type="checkbox">Veer- en demperbijdrage apart tonen</label>
+<p class="compare-note" id="compareNote" hidden></p>
+</div>
+
+<section class="card research-card" id="research" aria-labelledby="researchTitle">
+<div class="research-header"><div><div class="kicker muted">Onderzoek · Eén parameter tegelijk</div><h2 id="researchTitle">Laat de simulator een reeks berekenen.</h2><p>Alle proeven gebruiken dezelfde basisinstellingen en hetzelfde tijdvenster. Klik daarna op een punt om die proef af te spelen.</p></div><span class="pill">3–61 proeven</span></div>
+<form id="sweepForm" class="sweep-controls">
+<div><label for="sweepKey">Te onderzoeken parameter</label><select id="sweepKey" class="select-full"></select></div>
+<div><label for="sweepMin">Minimum</label><input id="sweepMin" type="number" step="any" value="20" required></div>
+<div><label for="sweepMax">Maximum</label><input id="sweepMax" type="number" step="any" value="100" required></div>
+<div><label for="sweepCount">Aantal proeven</label><input id="sweepCount" type="number" min="3" max="61" step="1" value="25" required></div>
+<div class="sweep-run"><button class="primary" id="sweepStart" type="submit">Onderzoek starten</button><button id="sweepCancel" type="button" hidden>Stoppen</button></div>
+</form>
+<div class="sweep-status"><p id="sweepHelp" class="small muted"></p><p id="sweepStatus" class="small" role="status" aria-live="polite">Klaar voor de eerste reeks.</p><progress id="sweepProgress" max="25" value="0" hidden aria-label="Voortgang parameteronderzoek"></progress></div>
+<div id="sweepEmpty" class="research-empty"><span class="empty-symbol" aria-hidden="true">↗</span><h3>Welke pulsafstand geeft de grootste reactie?</h3><p>Kies bijvoorbeeld 20 tot 100 ms met 25 proeven.<br>De invoeramplitude blijft gelijk; de timing verandert.</p></div>
+<div id="sweepResults" hidden>
+<div class="snapshot"><strong>Vaste basis van deze reeks</strong><p id="sweepSnapshot"></p></div>
+<div class="sweep-result-head"><h3 id="sweepChartTitle">Berekende reactiekracht per proef</h3><select id="sweepMetric" aria-label="Uitkomst voor parametergrafiek"><option value="rmax">Maximum |ΔR| · N</option><option value="zmax">Maximum |z| · mm</option></select></div>
+<svg id="sweepPlot" viewBox="0 0 900 290" role="img" aria-label="Klikbare resultaten van het parameteronderzoek"></svg>
+<p id="sweepInsight" class="sweep-insight"></p><p class="field-help">Alleen berekende punten; de verbindingslijn is een visuele gids. Dit is geen bewijs van een continu maximum, stationaire frequentierespons of schadegrens.</p>
+<div class="sweep-selected" id="selectedTrial" hidden></div>
+<div class="exports"><button id="sweepCSV">Onderzoek CSV</button><button id="sweepJSON">Onderzoek JSON</button></div>
+<details class="sweep-table"><summary>Alle proeven als tabel bekijken</summary><div class="table-scroll"><table><thead><tr><th>Proef</th><th id="sweepColName">Parameter</th><th>Max. |ΔR| (N)</th><th>Max. |z| (mm)</th><th>Actie</th></tr></thead><tbody id="sweepRows"></tbody></table></div></details>
+</div></section>
+<div class="card check-card"><div><h3>Modelcontrole</h3><p class="small muted">Controleer nul-invoer, lineariteit en een twee keer fijnere tijdstap. Dit controleert de berekening, niet de fysieke juistheid.</p></div><button id="runCheck">Rekencontrole uitvoeren</button><p id="checkStatus" class="small" role="status">Nog niet uitgevoerd voor dit scenario.</p></div>
+
+<div class="card details-card"><details><summary>Wat wordt berekend — en wat niet?</summary><div class="details-content">
+<div class="equation">m ẍ + c(ẋ − ẏ) + k(x − y) = 0<br>z = x − y &nbsp; · &nbsp; ΔR = kz + c(ẋ − ẏ)<br>c = 2ζ√(km) &nbsp; · &nbsp; fₙ = √(k/m) / (2π)</div>
+<h3>Eén toestand, ook tussen pulsen</h3><p>Dit blijft een lineair model met één vrijheidsgraad. De positie x en snelheid ẋ lopen door tussen de pulsen. Alleen bij het begin van een nieuw scenario starten ze op nul. De animatie volgt de berekende tijdreeks; de weergaveschaal verandert de uitkomst niet. ΔR is de kracht op de basis, −ΔR de kracht op de massa. Positief is omhoog.</p>
+<h3>Drie invoerprofielen</h3><p>Een puls heeft y = −d[1 − cos(2πτ/T)]/2, met T = ℓ/v en start t₀ = 0,05 s. Herhaalde pulsen beginnen op t₀ + jΔt; hun start-tot-starttijd Δt moet minstens T zijn. Bij periodieke invoer volgen N cosinusperioden elkaar zonder pauze op, met T = 1/f. Deze invoer ligt tussen −d en 0 en heeft tijdens de reeks een gemiddelde van −d/2. y en ẏ zijn continu aan de uiteinden; ÿ kan daar verspringen. Een eindige reeks is geen stationaire frequentierespons.</p>
+<h3>Reeksen vergelijken</h3><p>Bij een parameteronderzoek verandert één parameter. Het observatievenster is voor alle proeven hetzelfde: tot het einde van de langste invoer plus minimaal 0,45 s en acht eigenperioden van het langzaamste systeem. De begintoestand is voor elke afzonderlijke proef opnieuw in rust. Klikken op een punt gebruikt precies dit tijdvenster, met de vaste basis van die reeks als referentie. De piek geldt alleen binnen dit venster.</p>
+<h3>Wat is niet berekend?</h3><p>Het zijn synthetische equivalente basisbewegingen, geen gevalideerde overdracht van een spoorstaafdefect. Geen statische belasting, montagevoorspanning, contactverlies, speling, lokale spanning, materiaalbeschadiging of vermoeiingslevensduur. Herhaalde pulsen zijn geen getelde treinpassages. De kleuren en pijlen geven geen veiligheid aan. m is geen treinmassa; k is niet bewezen de stijfheid van het neusdeel.</p>
+<h3>Numeriek</h3><p>Vierde-orde Runge–Kutta, opgesplitst bij elke pulsgrens; minimaal 200 stappen per eigenperiode en 400 per invoerperiode tijdens invoer. De toestand wordt behouden bij iedere grens. Berekening in SI, weergave in mm en km/u. Automatische tests vergelijken de drie profielen met een onafhankelijke SciPy/DOP853-oplossing. Een parameteronderzoek draait lokaal in een aparte rekenworker; zonder worker wordt per proef teruggeschakeld naar de interface. Maximaal 300.000 stappen per proef en 120 s observatie; dit zijn numerieke grenzen, geen bedrijfsgrenzen.</p>
+</div></details>
+<div class="exports"><button id="saveScenario">Scenario opslaan</button><button id="loadScenario">Scenario laden</button><input id="importFile" type="file" accept="application/json,.json" hidden><button id="csv">Resultaten CSV</button><button id="share">Scenario delen</button><p>Scenario's worden als JSON bewaard. De CSV bevat alle berekende tijdmonsters in SI-eenheden. Scenario's uit v2 kunnen als enkele puls worden ingelezen.</p></div>
+</div>
+</section>
+</div>
+<footer><span>GVB · IP Project / Experimentenlab v3.0 NL · Studentenwerk, geen officiële GVB-software.</span><span>Geen bestanden worden naar een server verstuurd.</span></footer>
+</main>
+<div class="toast" role="status" id="toast" hidden></div>
+<noscript><p>Schakel JavaScript in om de lokale berekening en animatie te gebruiken.</p></noscript>
+<script>/* MODEL */</script>
+<script type="text/plain" id="workerCode">/* MODEL */
+/* WORKER */</script>
+<script>/* APP */</script>
+</body></html>

@@ -1,0 +1,22 @@
+{
+  "parameters": {
+    "profile": "periodic",
+    "mass": 10,
+    "stiffness": 200000,
+    "damping": 0.05,
+    "depth": 1,
+    "length": 0.15,
+    "speed": 36,
+    "pulseCount": 5,
+    "intervalMs": 45,
+    "frequency": 22,
+    "cycles": 12
+  },
+  "fn": 22.507907903927652,
+  "rmax": 894.2733960289994,
+  "zmax": 0.004450074430719292,
+  "xmax": 0.005169489099189245,
+  "peakTime": 0.5804545454545454,
+  "end": 1.0454545454545454,
+  "samples": 7060
+}
